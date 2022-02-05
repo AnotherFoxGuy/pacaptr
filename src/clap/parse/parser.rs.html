@@ -1,4 +1,11 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;git&#x2F;checkouts&#x2F;clap-78dbe9b58f9073fe&#x2F;33d86ef&#x2F;src&#x2F;parse&#x2F;parser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>parser.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../clap/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;clap.rs&#x2F;images&#x2F;media&#x2F;clap.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/clap-3.0.14/src/parse/parser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>parser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../clap/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/clap-rs/clap/master/assets/clap.png" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../../clap/index.html"><div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/clap-rs/clap/master/assets/clap.png" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../clap/index.html">
+                        <img src="https://raw.githubusercontent.com/clap-rs/clap/master/assets/clap.png" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1683,226 +1690,11 @@
 <span id="1683">1683</span>
 <span id="1684">1684</span>
 <span id="1685">1685</span>
-<span id="1686">1686</span>
-<span id="1687">1687</span>
-<span id="1688">1688</span>
-<span id="1689">1689</span>
-<span id="1690">1690</span>
-<span id="1691">1691</span>
-<span id="1692">1692</span>
-<span id="1693">1693</span>
-<span id="1694">1694</span>
-<span id="1695">1695</span>
-<span id="1696">1696</span>
-<span id="1697">1697</span>
-<span id="1698">1698</span>
-<span id="1699">1699</span>
-<span id="1700">1700</span>
-<span id="1701">1701</span>
-<span id="1702">1702</span>
-<span id="1703">1703</span>
-<span id="1704">1704</span>
-<span id="1705">1705</span>
-<span id="1706">1706</span>
-<span id="1707">1707</span>
-<span id="1708">1708</span>
-<span id="1709">1709</span>
-<span id="1710">1710</span>
-<span id="1711">1711</span>
-<span id="1712">1712</span>
-<span id="1713">1713</span>
-<span id="1714">1714</span>
-<span id="1715">1715</span>
-<span id="1716">1716</span>
-<span id="1717">1717</span>
-<span id="1718">1718</span>
-<span id="1719">1719</span>
-<span id="1720">1720</span>
-<span id="1721">1721</span>
-<span id="1722">1722</span>
-<span id="1723">1723</span>
-<span id="1724">1724</span>
-<span id="1725">1725</span>
-<span id="1726">1726</span>
-<span id="1727">1727</span>
-<span id="1728">1728</span>
-<span id="1729">1729</span>
-<span id="1730">1730</span>
-<span id="1731">1731</span>
-<span id="1732">1732</span>
-<span id="1733">1733</span>
-<span id="1734">1734</span>
-<span id="1735">1735</span>
-<span id="1736">1736</span>
-<span id="1737">1737</span>
-<span id="1738">1738</span>
-<span id="1739">1739</span>
-<span id="1740">1740</span>
-<span id="1741">1741</span>
-<span id="1742">1742</span>
-<span id="1743">1743</span>
-<span id="1744">1744</span>
-<span id="1745">1745</span>
-<span id="1746">1746</span>
-<span id="1747">1747</span>
-<span id="1748">1748</span>
-<span id="1749">1749</span>
-<span id="1750">1750</span>
-<span id="1751">1751</span>
-<span id="1752">1752</span>
-<span id="1753">1753</span>
-<span id="1754">1754</span>
-<span id="1755">1755</span>
-<span id="1756">1756</span>
-<span id="1757">1757</span>
-<span id="1758">1758</span>
-<span id="1759">1759</span>
-<span id="1760">1760</span>
-<span id="1761">1761</span>
-<span id="1762">1762</span>
-<span id="1763">1763</span>
-<span id="1764">1764</span>
-<span id="1765">1765</span>
-<span id="1766">1766</span>
-<span id="1767">1767</span>
-<span id="1768">1768</span>
-<span id="1769">1769</span>
-<span id="1770">1770</span>
-<span id="1771">1771</span>
-<span id="1772">1772</span>
-<span id="1773">1773</span>
-<span id="1774">1774</span>
-<span id="1775">1775</span>
-<span id="1776">1776</span>
-<span id="1777">1777</span>
-<span id="1778">1778</span>
-<span id="1779">1779</span>
-<span id="1780">1780</span>
-<span id="1781">1781</span>
-<span id="1782">1782</span>
-<span id="1783">1783</span>
-<span id="1784">1784</span>
-<span id="1785">1785</span>
-<span id="1786">1786</span>
-<span id="1787">1787</span>
-<span id="1788">1788</span>
-<span id="1789">1789</span>
-<span id="1790">1790</span>
-<span id="1791">1791</span>
-<span id="1792">1792</span>
-<span id="1793">1793</span>
-<span id="1794">1794</span>
-<span id="1795">1795</span>
-<span id="1796">1796</span>
-<span id="1797">1797</span>
-<span id="1798">1798</span>
-<span id="1799">1799</span>
-<span id="1800">1800</span>
-<span id="1801">1801</span>
-<span id="1802">1802</span>
-<span id="1803">1803</span>
-<span id="1804">1804</span>
-<span id="1805">1805</span>
-<span id="1806">1806</span>
-<span id="1807">1807</span>
-<span id="1808">1808</span>
-<span id="1809">1809</span>
-<span id="1810">1810</span>
-<span id="1811">1811</span>
-<span id="1812">1812</span>
-<span id="1813">1813</span>
-<span id="1814">1814</span>
-<span id="1815">1815</span>
-<span id="1816">1816</span>
-<span id="1817">1817</span>
-<span id="1818">1818</span>
-<span id="1819">1819</span>
-<span id="1820">1820</span>
-<span id="1821">1821</span>
-<span id="1822">1822</span>
-<span id="1823">1823</span>
-<span id="1824">1824</span>
-<span id="1825">1825</span>
-<span id="1826">1826</span>
-<span id="1827">1827</span>
-<span id="1828">1828</span>
-<span id="1829">1829</span>
-<span id="1830">1830</span>
-<span id="1831">1831</span>
-<span id="1832">1832</span>
-<span id="1833">1833</span>
-<span id="1834">1834</span>
-<span id="1835">1835</span>
-<span id="1836">1836</span>
-<span id="1837">1837</span>
-<span id="1838">1838</span>
-<span id="1839">1839</span>
-<span id="1840">1840</span>
-<span id="1841">1841</span>
-<span id="1842">1842</span>
-<span id="1843">1843</span>
-<span id="1844">1844</span>
-<span id="1845">1845</span>
-<span id="1846">1846</span>
-<span id="1847">1847</span>
-<span id="1848">1848</span>
-<span id="1849">1849</span>
-<span id="1850">1850</span>
-<span id="1851">1851</span>
-<span id="1852">1852</span>
-<span id="1853">1853</span>
-<span id="1854">1854</span>
-<span id="1855">1855</span>
-<span id="1856">1856</span>
-<span id="1857">1857</span>
-<span id="1858">1858</span>
-<span id="1859">1859</span>
-<span id="1860">1860</span>
-<span id="1861">1861</span>
-<span id="1862">1862</span>
-<span id="1863">1863</span>
-<span id="1864">1864</span>
-<span id="1865">1865</span>
-<span id="1866">1866</span>
-<span id="1867">1867</span>
-<span id="1868">1868</span>
-<span id="1869">1869</span>
-<span id="1870">1870</span>
-<span id="1871">1871</span>
-<span id="1872">1872</span>
-<span id="1873">1873</span>
-<span id="1874">1874</span>
-<span id="1875">1875</span>
-<span id="1876">1876</span>
-<span id="1877">1877</span>
-<span id="1878">1878</span>
-<span id="1879">1879</span>
-<span id="1880">1880</span>
-<span id="1881">1881</span>
-<span id="1882">1882</span>
-<span id="1883">1883</span>
-<span id="1884">1884</span>
-<span id="1885">1885</span>
-<span id="1886">1886</span>
-<span id="1887">1887</span>
-<span id="1888">1888</span>
-<span id="1889">1889</span>
-<span id="1890">1890</span>
-<span id="1891">1891</span>
-<span id="1892">1892</span>
-<span id="1893">1893</span>
-<span id="1894">1894</span>
-<span id="1895">1895</span>
-<span id="1896">1896</span>
-<span id="1897">1897</span>
-<span id="1898">1898</span>
-<span id="1899">1899</span>
-<span id="1900">1900</span>
-<span id="1901">1901</span>
 </pre><pre class="rust"><code><span class="comment">// Std</span>
 <span class="kw">use</span> <span class="ident">std</span>::{
-    <span class="ident">cell::Cell</span>,
+    <span class="ident">cell</span>::{<span class="ident">Cell</span>, <span class="ident">RefCell</span>},
     <span class="ident">ffi</span>::{<span class="ident">OsStr</span>, <span class="ident">OsString</span>},
+    <span class="ident">fmt::Write</span> <span class="kw">as</span> <span class="kw">_</span>,
 };
 
 <span class="comment">// Third Party</span>
@@ -1920,103 +1712,21 @@
     <span class="ident">parse::features::suggestions</span>,
     <span class="ident">parse</span>::{<span class="ident">ArgMatcher</span>, <span class="ident">SubCommand</span>},
     <span class="ident">parse</span>::{<span class="ident">Validator</span>, <span class="ident">ValueType</span>},
-    <span class="ident">util</span>::{<span class="ident">ChildGraph</span>, <span class="ident">Id</span>},
+    <span class="ident">util</span>::{<span class="ident">color::ColorChoice</span>, <span class="ident">ChildGraph</span>, <span class="ident">Id</span>},
     <span class="ident">INTERNAL_ERROR_MSG</span>, <span class="ident">INVALID_UTF8</span>,
 };
-
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum</span> <span class="ident">ParseState</span> {
-    <span class="ident">ValuesDone</span>,
-    <span class="ident">Opt</span>(<span class="ident">Id</span>),
-    <span class="ident">Pos</span>(<span class="ident">Id</span>),
-}
-
-<span class="doccomment">/// Recoverable Parsing results.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Clone</span>)]</span>
-<span class="kw">enum</span> <span class="ident">ParseResult</span> {
-    <span class="ident">FlagSubCommand</span>(<span class="ident">String</span>),
-    <span class="ident">Opt</span>(<span class="ident">Id</span>),
-    <span class="ident">ValuesDone</span>,
-    <span class="doccomment">/// Value attached to the short flag is not consumed(e.g. &#39;u&#39; for `-cu` is</span>
-    <span class="doccomment">/// not consumed).</span>
-    <span class="ident">AttachedValueNotConsumed</span>,
-    <span class="doccomment">/// This long flag doesn&#39;t need a value but is provided one.</span>
-    <span class="ident">UnneededAttachedValue</span> {
-        <span class="ident">rest</span>: <span class="ident">String</span>,
-        <span class="ident">used</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Id</span><span class="op">&gt;</span>,
-        <span class="ident">arg</span>: <span class="ident">String</span>,
-    },
-    <span class="doccomment">/// This flag might be an hyphen Value.</span>
-    <span class="ident">MaybeHyphenValue</span>,
-    <span class="doccomment">/// Equals required but not provided.</span>
-    <span class="ident">EqualsNotProvided</span> {
-        <span class="ident">arg</span>: <span class="ident">String</span>,
-    },
-    <span class="doccomment">/// Failed to match a Arg.</span>
-    <span class="ident">NoMatchingArg</span> {
-        <span class="ident">arg</span>: <span class="ident">String</span>,
-    },
-    <span class="doccomment">/// No argument found e.g. parser is given `-` when parsing a flag.</span>
-    <span class="ident">NoArg</span>,
-    <span class="doccomment">/// This is a Help flag.</span>
-    <span class="ident">HelpFlag</span>,
-    <span class="doccomment">/// This is a version flag.</span>
-    <span class="ident">VersionFlag</span>,
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">Input</span> {
-    <span class="ident">items</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OsString</span><span class="op">&gt;</span>,
-    <span class="ident">cursor</span>: <span class="ident">usize</span>,
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">I</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Input</span>
-<span class="kw">where</span>
-    <span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span>,
-    <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">OsString</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clone</span>,
-{
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">items</span>: <span class="ident">val</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">into</span>()).<span class="ident">collect</span>(),
-            <span class="ident">cursor</span>: <span class="number">0</span>,
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">Input</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="ident">OsStr</span>, <span class="kw-2">&amp;</span>[<span class="ident">OsString</span>])<span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">items</span>.<span class="ident">len</span>() {
-            <span class="prelude-val">None</span>
-        } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">current</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">items</span>[<span class="self">self</span>.<span class="ident">cursor</span>];
-            <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-            <span class="kw">let</span> <span class="ident">remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">items</span>[<span class="self">self</span>.<span class="ident">cursor</span>..];
-            <span class="prelude-val">Some</span>((<span class="ident">current</span>, <span class="ident">remaining</span>))
-        }
-    }
-
-    <span class="doccomment">/// Insert some items to the Input items just after current parsing cursor.</span>
-    <span class="doccomment">/// Usually used by replaced items recovering.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">insert</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">insert_items</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) {
-        <span class="self">self</span>.<span class="ident">items</span> <span class="op">=</span> <span class="ident">insert_items</span>
-            .<span class="ident">iter</span>()
-            .<span class="ident">map</span>(<span class="ident">OsString::from</span>)
-            .<span class="ident">chain</span>(<span class="self">self</span>.<span class="ident">items</span>.<span class="ident">drain</span>(<span class="self">self</span>.<span class="ident">cursor</span>..))
-            .<span class="ident">collect</span>();
-        <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">=</span> <span class="number">0</span>;
-    }
-}
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">Parser</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span>, <span class="lifetime">&#39;app</span><span class="op">&gt;</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">app</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;app</span> <span class="kw-2">mut</span> <span class="ident">App</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">required</span>: <span class="ident">ChildGraph</span><span class="op">&lt;</span><span class="ident">Id</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">overridden</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Id</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">seen</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Id</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">cur_idx</span>: <span class="ident">Cell</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">overridden</span>: <span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Id</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">seen</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Id</span><span class="op">&gt;</span>,
+    <span class="ident">cur_idx</span>: <span class="ident">Cell</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Index of the previous flag subcommand in a group of flags.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">flag_subcmd_at</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+    <span class="ident">flag_subcmd_at</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Counter indicating the number of items to skip</span>
     <span class="doccomment">/// when revisiting the group of flags which includes the flag subcommand.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">flag_subcmd_skip</span>: <span class="ident">usize</span>,
+    <span class="ident">flag_subcmd_skip</span>: <span class="ident">usize</span>,
 }
 
 <span class="comment">// Initializing Methods</span>
@@ -2030,11 +1740,19 @@
         {
             <span class="ident">reqs</span>.<span class="ident">insert</span>(<span class="ident">a</span>.<span class="ident">id</span>.<span class="ident">clone</span>());
         }
+        <span class="kw">for</span> <span class="ident">group</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">app</span>.<span class="ident">groups</span> {
+            <span class="kw">if</span> <span class="ident">group</span>.<span class="ident">required</span> {
+                <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">reqs</span>.<span class="ident">insert</span>(<span class="ident">group</span>.<span class="ident">id</span>.<span class="ident">clone</span>());
+                <span class="kw">for</span> <span class="ident">a</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">group</span>.<span class="ident">requires</span> {
+                    <span class="ident">reqs</span>.<span class="ident">insert_child</span>(<span class="ident">idx</span>, <span class="ident">a</span>.<span class="ident">clone</span>());
+                }
+            }
+        }
 
         <span class="ident">Parser</span> {
             <span class="ident">app</span>,
             <span class="ident">required</span>: <span class="ident">reqs</span>,
-            <span class="ident">overridden</span>: <span class="ident">Vec::new</span>(),
+            <span class="ident">overridden</span>: <span class="ident">Default::default</span>(),
             <span class="ident">seen</span>: <span class="ident">Vec::new</span>(),
             <span class="ident">cur_idx</span>: <span class="ident">Cell::new</span>(<span class="number">0</span>),
             <span class="ident">flag_subcmd_at</span>: <span class="prelude-val">None</span>,
@@ -2042,195 +1760,14 @@
         }
     }
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">debug_assertions</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">_verify_positionals</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="macro">debug!</span>(<span class="string">&quot;Parser::_verify_positionals&quot;</span>);
-        <span class="comment">// Because you must wait until all arguments have been supplied, this is the first chance</span>
-        <span class="comment">// to make assertions on positional argument indexes</span>
-        <span class="comment">//</span>
-        <span class="comment">// First we verify that the index highest supplied index, is equal to the number of</span>
-        <span class="comment">// positional arguments to verify there are no gaps (i.e. supplying an index of 1 and 3</span>
-        <span class="comment">// but no 2)</span>
-
-        <span class="kw">let</span> <span class="ident">highest_idx</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">app</span>
-            .<span class="ident">args</span>
-            .<span class="ident">keys</span>()
-            .<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="ident">KeyType::Position</span>(<span class="ident">n</span>) <span class="op">=</span> <span class="ident">x</span> {
-                    <span class="prelude-val">Some</span>(<span class="kw-2">*</span><span class="ident">n</span>)
-                } <span class="kw">else</span> {
-                    <span class="prelude-val">None</span>
-                }
-            })
-            .<span class="ident">max</span>()
-            .<span class="ident">unwrap_or</span>(<span class="number">0</span>);
-
-        <span class="comment">//_highest_idx(&amp;self.positionals);</span>
-
-        <span class="kw">let</span> <span class="ident">num_p</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">args</span>.<span class="ident">keys</span>().<span class="ident">filter</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">is_position</span>()).<span class="ident">count</span>();
-
-        <span class="macro">assert!</span>(
-            <span class="ident">highest_idx</span> <span class="op">==</span> <span class="ident">num_p</span>,
-            <span class="string">&quot;Found positional argument whose index is {} but there \
-             are only {} positional arguments defined&quot;</span>,
-            <span class="ident">highest_idx</span>,
-            <span class="ident">num_p</span>
-        );
-
-        <span class="comment">// Next we verify that only the highest index has a .multiple_values(true) (if any)</span>
-        <span class="kw">let</span> <span class="ident">only_highest</span> <span class="op">=</span> <span class="op">|</span><span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">|</span> {
-            <span class="ident">a</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::MultipleValues</span>) <span class="op">&amp;&amp;</span> (<span class="ident">a</span>.<span class="ident">index</span>.<span class="ident">unwrap_or</span>(<span class="number">0</span>) <span class="op">!</span><span class="op">=</span> <span class="ident">highest_idx</span>)
-        };
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">get_positionals</span>().<span class="ident">any</span>(<span class="ident">only_highest</span>) {
-            <span class="comment">// First we make sure if there is a positional that allows multiple values</span>
-            <span class="comment">// the one before it (second to last) has one of these:</span>
-            <span class="comment">//  * a value terminator</span>
-            <span class="comment">//  * ArgSettings::Last</span>
-            <span class="comment">//  * The last arg is Required</span>
-
-            <span class="comment">// We can&#39;t pass the closure (it.next()) to the macro directly because each call to</span>
-            <span class="comment">// find() (iterator, not macro) gets called repeatedly.</span>
-            <span class="kw">let</span> <span class="ident">last</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">app</span>.<span class="ident">args</span>[<span class="kw-2">&amp;</span><span class="ident">KeyType::Position</span>(<span class="ident">highest_idx</span>)];
-            <span class="kw">let</span> <span class="ident">second_to_last</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">app</span>.<span class="ident">args</span>[<span class="kw-2">&amp;</span><span class="ident">KeyType::Position</span>(<span class="ident">highest_idx</span> <span class="op">-</span> <span class="number">1</span>)];
-
-            <span class="comment">// Either the final positional is required</span>
-            <span class="comment">// Or the second to last has a terminator or .last(true) set</span>
-            <span class="kw">let</span> <span class="ident">ok</span> <span class="op">=</span> <span class="ident">last</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Required</span>)
-                <span class="op">|</span><span class="op">|</span> (<span class="ident">second_to_last</span>.<span class="ident">terminator</span>.<span class="ident">is_some</span>()
-                    <span class="op">|</span><span class="op">|</span> <span class="ident">second_to_last</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Last</span>))
-                <span class="op">|</span><span class="op">|</span> <span class="ident">last</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Last</span>);
-            <span class="macro">assert!</span>(
-                <span class="ident">ok</span>,
-                <span class="string">&quot;When using a positional argument with .multiple_values(true) that is *not the \
-                 last* positional argument, the last positional argument (i.e. the one \
-                 with the highest index) *must* have .required(true) or .last(true) set.&quot;</span>
-            );
-
-            <span class="comment">// We make sure if the second to last is Multiple the last is ArgSettings::Last</span>
-            <span class="kw">let</span> <span class="ident">ok</span> <span class="op">=</span> <span class="ident">second_to_last</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::MultipleValues</span>)
-                <span class="op">|</span><span class="op">|</span> <span class="ident">last</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Last</span>);
-            <span class="macro">assert!</span>(
-                <span class="ident">ok</span>,
-                <span class="string">&quot;Only the last positional argument, or second to last positional \
-                 argument may be set to .multiple_values(true)&quot;</span>
-            );
-
-            <span class="comment">// Next we check how many have both Multiple and not a specific number of values set</span>
-            <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="self">self</span>
-                .<span class="ident">app</span>
-                .<span class="ident">get_positionals</span>()
-                .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">settings</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::MultipleValues</span>) <span class="op">&amp;&amp;</span> <span class="ident">p</span>.<span class="ident">num_vals</span>.<span class="ident">is_none</span>())
-                .<span class="ident">count</span>();
-            <span class="kw">let</span> <span class="ident">ok</span> <span class="op">=</span> <span class="ident">count</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span>
-                <span class="op">|</span><span class="op">|</span> (<span class="ident">last</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Last</span>)
-                    <span class="op">&amp;&amp;</span> <span class="ident">last</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::MultipleValues</span>)
-                    <span class="op">&amp;&amp;</span> <span class="ident">second_to_last</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::MultipleValues</span>)
-                    <span class="op">&amp;&amp;</span> <span class="ident">count</span> <span class="op">==</span> <span class="number">2</span>);
-            <span class="macro">assert!</span>(
-                <span class="ident">ok</span>,
-                <span class="string">&quot;Only one positional argument with .multiple_values(true) set is allowed per \
-                 command, unless the second one also has .last(true) set&quot;</span>
-            );
+    <span class="comment">// Should we color the help?</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">color_help</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">ColorChoice</span> {
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;color&quot;</span>)]</span>
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::DisableColoredHelp</span>) {
+            <span class="kw">return</span> <span class="ident">ColorChoice::Never</span>;
         }
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">found</span> <span class="op">=</span> <span class="bool-val">false</span>;
-
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllowMissingPositional</span>) {
-            <span class="comment">// Check that if a required positional argument is found, all positions with a lower</span>
-            <span class="comment">// index are also required.</span>
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">foundx2</span> <span class="op">=</span> <span class="bool-val">false</span>;
-
-            <span class="kw">for</span> <span class="ident">p</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">get_positionals</span>() {
-                <span class="kw">if</span> <span class="ident">foundx2</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">p</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Required</span>) {
-                    <span class="macro">assert!</span>(
-                        <span class="ident">p</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Required</span>),
-                        <span class="string">&quot;Found non-required positional argument with a lower \
-                         index than a required positional argument by two or more: {:?} \
-                         index {:?}&quot;</span>,
-                        <span class="ident">p</span>.<span class="ident">name</span>,
-                        <span class="ident">p</span>.<span class="ident">index</span>
-                    );
-                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">p</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Required</span>) <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">p</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Last</span>) {
-                    <span class="comment">// Args that .last(true) don&#39;t count since they can be required and have</span>
-                    <span class="comment">// positionals with a lower index that aren&#39;t required</span>
-                    <span class="comment">// Imagine: prog &lt;req1&gt; [opt1] -- &lt;req2&gt;</span>
-                    <span class="comment">// Both of these are valid invocations:</span>
-                    <span class="comment">//      $ prog r1 -- r2</span>
-                    <span class="comment">//      $ prog r1 o1 -- r2</span>
-                    <span class="kw">if</span> <span class="ident">found</span> {
-                        <span class="ident">foundx2</span> <span class="op">=</span> <span class="bool-val">true</span>;
-                        <span class="kw">continue</span>;
-                    }
-                    <span class="ident">found</span> <span class="op">=</span> <span class="bool-val">true</span>;
-                    <span class="kw">continue</span>;
-                } <span class="kw">else</span> {
-                    <span class="ident">found</span> <span class="op">=</span> <span class="bool-val">false</span>;
-                }
-            }
-        } <span class="kw">else</span> {
-            <span class="comment">// Check that if a required positional argument is found, all positions with a lower</span>
-            <span class="comment">// index are also required</span>
-            <span class="kw">for</span> <span class="ident">p</span> <span class="kw">in</span> (<span class="number">1</span>..<span class="op">=</span><span class="ident">num_p</span>).<span class="ident">rev</span>().<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">n</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">args</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">n</span>)) {
-                <span class="kw">if</span> <span class="ident">found</span> {
-                    <span class="macro">assert!</span>(
-                        <span class="ident">p</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Required</span>),
-                        <span class="string">&quot;Found non-required positional argument with a lower \
-                         index than a required positional argument: {:?} index {:?}&quot;</span>,
-                        <span class="ident">p</span>.<span class="ident">name</span>,
-                        <span class="ident">p</span>.<span class="ident">index</span>
-                    );
-                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">p</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Required</span>) <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">p</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Last</span>) {
-                    <span class="comment">// Args that .last(true) don&#39;t count since they can be required and have</span>
-                    <span class="comment">// positionals with a lower index that aren&#39;t required</span>
-                    <span class="comment">// Imagine: prog &lt;req1&gt; [opt1] -- &lt;req2&gt;</span>
-                    <span class="comment">// Both of these are valid invocations:</span>
-                    <span class="comment">//      $ prog r1 -- r2</span>
-                    <span class="comment">//      $ prog r1 o1 -- r2</span>
-                    <span class="ident">found</span> <span class="op">=</span> <span class="bool-val">true</span>;
-                    <span class="kw">continue</span>;
-                }
-            }
-        }
-        <span class="macro">assert!</span>(
-            <span class="self">self</span>.<span class="ident">app</span>
-                .<span class="ident">get_positionals</span>()
-                .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Last</span>))
-                .<span class="ident">count</span>()
-                <span class="op">&lt;</span> <span class="number">2</span>,
-            <span class="string">&quot;Only one positional argument may have last(true) set. Found two.&quot;</span>
-        );
-        <span class="kw">if</span> <span class="self">self</span>
-            .<span class="ident">app</span>
-            .<span class="ident">get_positionals</span>()
-            .<span class="ident">any</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Last</span>) <span class="op">&amp;&amp;</span> <span class="ident">p</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Required</span>))
-            <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">has_subcommands</span>()
-            <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::SubcommandsNegateReqs</span>)
-        {
-            <span class="macro">panic!</span>(
-                <span class="string">&quot;Having a required positional argument with .last(true) set *and* child \
-                 subcommands without setting SubcommandsNegateReqs isn&#39;t compatible.&quot;</span>
-            );
-        }
-
-        <span class="bool-val">true</span>
-    }
-
-    <span class="comment">// Does all the initializing and prepares the parser</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">_build</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="macro">debug!</span>(<span class="string">&quot;Parser::_build&quot;</span>);
-
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">debug_assertions</span>)]</span>
-        <span class="self">self</span>.<span class="ident">_verify_positionals</span>();
-
-        <span class="kw">for</span> <span class="ident">group</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">app</span>.<span class="ident">groups</span> {
-            <span class="kw">if</span> <span class="ident">group</span>.<span class="ident">required</span> {
-                <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">required</span>.<span class="ident">insert</span>(<span class="ident">group</span>.<span class="ident">id</span>.<span class="ident">clone</span>());
-                <span class="kw">for</span> <span class="ident">a</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">group</span>.<span class="ident">requires</span> {
-                    <span class="self">self</span>.<span class="ident">required</span>.<span class="ident">insert_child</span>(<span class="ident">idx</span>, <span class="ident">a</span>.<span class="ident">clone</span>());
-                }
-            }
-        }
+        <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">get_color</span>()
     }
 }
 
@@ -2239,13 +1776,12 @@
     <span class="comment">// The actual parsing function</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::cognitive_complexity</span>)]</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">get_matches_with</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>,
-        <span class="ident">it</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Input</span>,
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
+        <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>,
+        <span class="ident">it</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Input</span>,
     ) -&gt; <span class="ident">ClapResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="macro">debug!</span>(<span class="string">&quot;Parser::get_matches_with&quot;</span>);
         <span class="comment">// Verify all positional assertions pass</span>
-        <span class="self">self</span>.<span class="ident">_build</span>();
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">subcmd_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">None</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">keep_state</span> <span class="op">=</span> <span class="bool-val">false</span>;
@@ -2290,12 +1826,12 @@
                 <span class="kw">let</span> <span class="ident">is_second_to_last</span> <span class="op">=</span> <span class="ident">pos_counter</span> <span class="op">+</span> <span class="number">1</span> <span class="op">==</span> <span class="ident">positional_count</span>;
 
                 <span class="comment">// The last positional argument, or second to last positional</span>
-                <span class="comment">// argument may be set to .multiple_values(true)</span>
+                <span class="comment">// argument may be set to .multiple_values(true) or `.multiple_occurrences(true)`</span>
                 <span class="kw">let</span> <span class="ident">low_index_mults</span> <span class="op">=</span> <span class="ident">is_second_to_last</span>
-                    <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">get_positionals</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">a</span><span class="op">|</span> {
-                        <span class="ident">a</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::MultipleValues</span>)
-                            <span class="op">&amp;&amp;</span> (<span class="ident">positional_count</span> <span class="op">!</span><span class="op">=</span> <span class="ident">a</span>.<span class="ident">index</span>.<span class="ident">unwrap_or</span>(<span class="number">0</span>))
-                    })
+                    <span class="op">&amp;&amp;</span> <span class="self">self</span>
+                        .<span class="ident">app</span>
+                        .<span class="ident">get_positionals</span>()
+                        .<span class="ident">any</span>(<span class="op">|</span><span class="ident">a</span><span class="op">|</span> <span class="ident">a</span>.<span class="ident">is_multiple</span>() <span class="op">&amp;&amp;</span> (<span class="ident">positional_count</span> <span class="op">!</span><span class="op">=</span> <span class="ident">a</span>.<span class="ident">index</span>.<span class="ident">unwrap_or</span>(<span class="number">0</span>)))
                     <span class="op">&amp;&amp;</span> <span class="self">self</span>
                         .<span class="ident">app</span>
                         .<span class="ident">get_positionals</span>()
@@ -2380,7 +1916,7 @@
                         <span class="ident">matcher</span>,
                         <span class="ident">long_arg</span>,
                         <span class="kw-2">&amp;</span><span class="ident">parse_state</span>,
-                        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">valid_arg_found</span>,
+                        <span class="kw-2">&amp;mut</span> <span class="ident">valid_arg_found</span>,
                         <span class="ident">trailing_values</span>,
                     );
                     <span class="macro">debug!</span>(
@@ -2413,7 +1949,7 @@
                             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ClapError::no_equals</span>(
                                 <span class="self">self</span>.<span class="ident">app</span>,
                                 <span class="ident">arg</span>,
-                                <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
+                                <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
                             ));
                         }
                         <span class="ident">ParseResult::NoMatchingArg</span> { <span class="ident">arg</span> } =&gt; {
@@ -2428,7 +1964,7 @@
                                 <span class="self">self</span>.<span class="ident">app</span>,
                                 <span class="ident">rest</span>,
                                 <span class="ident">arg</span>,
-                                <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">create_usage_no_title</span>(<span class="kw-2">&amp;</span><span class="ident">used</span>),
+                                <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">create_usage_no_title</span>(<span class="kw-2">&amp;</span><span class="ident">used</span>),
                             ))
                         }
                         <span class="ident">ParseResult::HelpFlag</span> =&gt; {
@@ -2447,7 +1983,7 @@
                 } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">short_arg</span>) <span class="op">=</span> <span class="ident">arg_os</span>.<span class="ident">strip_prefix</span>(<span class="string">&quot;-&quot;</span>) {
                     <span class="comment">// Arg looks like a short flag, and not a possible number</span>
 
-                    <span class="comment">// Try to parse short args like normal, if AllowLeadingHyphen or</span>
+                    <span class="comment">// Try to parse short args like normal, if AllowHyphenValues or</span>
                     <span class="comment">// AllowNegativeNumbers is set, parse_short_arg will *not* throw</span>
                     <span class="comment">// an error, and instead return Ok(None)</span>
                     <span class="kw">let</span> <span class="ident">parse_result</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">parse_short_arg</span>(
@@ -2455,7 +1991,7 @@
                         <span class="ident">short_arg</span>,
                         <span class="kw-2">&amp;</span><span class="ident">parse_state</span>,
                         <span class="ident">pos_counter</span>,
-                        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">valid_arg_found</span>,
+                        <span class="kw-2">&amp;mut</span> <span class="ident">valid_arg_found</span>,
                         <span class="ident">trailing_values</span>,
                     );
                     <span class="comment">// If it&#39;s None, we then check if one of those two AppSettings was set</span>
@@ -2502,7 +2038,7 @@
                             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ClapError::no_equals</span>(
                                 <span class="self">self</span>.<span class="ident">app</span>,
                                 <span class="ident">arg</span>,
-                                <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
+                                <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
                             ))
                         }
                         <span class="ident">ParseResult::NoMatchingArg</span> { <span class="ident">arg</span> } =&gt; {
@@ -2510,7 +2046,7 @@
                                 <span class="self">self</span>.<span class="ident">app</span>,
                                 <span class="ident">arg</span>,
                                 <span class="prelude-val">None</span>,
-                                <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
+                                <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
                             ));
                         }
                         <span class="ident">ParseResult::HelpFlag</span> =&gt; {
@@ -2555,7 +2091,7 @@
                         <span class="self">self</span>.<span class="ident">app</span>,
                         <span class="ident">arg_os</span>.<span class="ident">to_str_lossy</span>().<span class="ident">into_owned</span>(),
                         <span class="prelude-val">None</span>,
-                        <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
+                        <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
                     ));
                 }
 
@@ -2564,10 +2100,14 @@
                 }
 
                 <span class="self">self</span>.<span class="ident">seen</span>.<span class="ident">push</span>(<span class="ident">p</span>.<span class="ident">id</span>.<span class="ident">clone</span>());
+                <span class="comment">// Increase occurrence no matter if we are appending, occurrences</span>
+                <span class="comment">// of positional argument equals to number of values rather than</span>
+                <span class="comment">// the number of value groups.</span>
+                <span class="self">self</span>.<span class="ident">inc_occurrence_of_arg</span>(<span class="ident">matcher</span>, <span class="ident">p</span>);
                 <span class="comment">// Creating new value group rather than appending when the arg</span>
                 <span class="comment">// doesn&#39;t have any value. This behaviour is right because</span>
-                <span class="comment">// positional arguments are always present continiously.</span>
-                <span class="kw">let</span> <span class="ident">append</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">arg_have_val</span>(<span class="ident">matcher</span>, <span class="ident">p</span>);
+                <span class="comment">// positional arguments are always present continuously.</span>
+                <span class="kw">let</span> <span class="ident">append</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">has_val_groups</span>(<span class="ident">matcher</span>, <span class="ident">p</span>);
                 <span class="self">self</span>.<span class="ident">add_val_to_arg</span>(
                     <span class="ident">p</span>,
                     <span class="kw-2">&amp;</span><span class="ident">arg_os</span>,
@@ -2577,13 +2117,8 @@
                     <span class="ident">trailing_values</span>,
                 );
 
-                <span class="comment">// Increase occurrence no matter if we are appending, occurrences</span>
-                <span class="comment">// of positional argument equals to number of values rather than</span>
-                <span class="comment">// the number of value groups.</span>
-                <span class="self">self</span>.<span class="ident">inc_occurrence_of_arg</span>(<span class="ident">matcher</span>, <span class="ident">p</span>);
-
                 <span class="comment">// Only increment the positional counter if it doesn&#39;t allow multiples</span>
-                <span class="kw">if</span> <span class="op">!</span><span class="ident">p</span>.<span class="ident">settings</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::MultipleValues</span>) {
+                <span class="kw">if</span> <span class="op">!</span><span class="ident">p</span>.<span class="ident">is_multiple</span>() {
                     <span class="ident">pos_counter</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                     <span class="ident">parse_state</span> <span class="op">=</span> <span class="ident">ParseState::ValuesDone</span>;
                 } <span class="kw">else</span> {
@@ -2597,21 +2132,21 @@
                     <span class="prelude-val">None</span> =&gt; {
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ClapError::invalid_utf8</span>(
                             <span class="self">self</span>.<span class="ident">app</span>,
-                            <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
+                            <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
                         ));
                     }
                 };
 
                 <span class="comment">// Collect the external subcommand args</span>
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sc_m</span> <span class="op">=</span> <span class="ident">ArgMatcher::default</span>();
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sc_m</span> <span class="op">=</span> <span class="ident">ArgMatcher::new</span>(<span class="self">self</span>.<span class="ident">app</span>);
 
                 <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">v</span>, <span class="kw">_</span>)) <span class="op">=</span> <span class="ident">it</span>.<span class="ident">next</span>() {
-                    <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllowInvalidUtf8ForExternalSubcommands</span>)
-                        <span class="op">&amp;&amp;</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">is_none</span>()
-                    {
+                    <span class="kw">let</span> <span class="ident">allow_invalid_utf8</span> <span class="op">=</span>
+                        <span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllowInvalidUtf8ForExternalSubcommands</span>);
+                    <span class="kw">if</span> <span class="op">!</span><span class="ident">allow_invalid_utf8</span> <span class="op">&amp;&amp;</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">is_none</span>() {
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ClapError::invalid_utf8</span>(
                             <span class="self">self</span>.<span class="ident">app</span>,
-                            <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
+                            <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
                         ));
                     }
                     <span class="ident">sc_m</span>.<span class="ident">add_val_to</span>(
@@ -2620,15 +2155,16 @@
                         <span class="ident">ValueType::CommandLine</span>,
                         <span class="bool-val">false</span>,
                     );
+                    <span class="ident">sc_m</span>.<span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="ident">Id::empty_hash</span>())
+                        .<span class="ident">expect</span>(<span class="string">&quot;just inserted&quot;</span>)
+                        .<span class="ident">invalid_utf8_allowed</span>(<span class="ident">allow_invalid_utf8</span>);
                 }
 
                 <span class="ident">matcher</span>.<span class="ident">subcommand</span>(<span class="ident">SubCommand</span> {
-                    <span class="ident">name</span>: <span class="ident">sc_name</span>.<span class="ident">clone</span>(),
-                    <span class="ident">id</span>: <span class="ident">sc_name</span>.<span class="ident">into</span>(),
+                    <span class="ident">id</span>: <span class="ident">Id::from</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">sc_name</span>),
+                    <span class="ident">name</span>: <span class="ident">sc_name</span>,
                     <span class="ident">matches</span>: <span class="ident">sc_m</span>.<span class="ident">into_inner</span>(),
                 });
-
-                <span class="self">self</span>.<span class="ident">remove_overrides</span>(<span class="ident">matcher</span>);
 
                 <span class="kw">return</span> <span class="ident">Validator::new</span>(<span class="self">self</span>).<span class="ident">validate</span>(
                     <span class="ident">parse_state</span>,
@@ -2655,7 +2191,7 @@
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ClapError::missing_subcommand</span>(
                 <span class="self">self</span>.<span class="ident">app</span>,
                 <span class="ident">bn</span>.<span class="ident">to_string</span>(),
-                <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
+                <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
             ));
         } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::SubcommandRequiredElseHelp</span>) {
             <span class="macro">debug!</span>(<span class="string">&quot;Parser::get_matches_with: SubcommandRequiredElseHelp=true&quot;</span>);
@@ -2663,10 +2199,9 @@
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ClapError::new</span>(
                 <span class="ident">message</span>,
                 <span class="ident">ErrorKind::DisplayHelpOnMissingArgumentOrSubcommand</span>,
+                <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">settings</span>.<span class="ident">is_set</span>(<span class="ident">AS::WaitOnError</span>),
             ));
         }
-
-        <span class="self">self</span>.<span class="ident">remove_overrides</span>(<span class="ident">matcher</span>);
 
         <span class="ident">Validator::new</span>(<span class="self">self</span>).<span class="ident">validate</span>(<span class="ident">parse_state</span>, <span class="ident">subcmd_name</span>.<span class="ident">is_some</span>(), <span class="ident">matcher</span>, <span class="ident">trailing_values</span>)
     }
@@ -2684,7 +2219,7 @@
                 <span class="kw">return</span> <span class="ident">ClapError::unnecessary_double_dash</span>(
                     <span class="self">self</span>.<span class="ident">app</span>,
                     <span class="ident">arg_os</span>.<span class="ident">to_str_lossy</span>().<span class="ident">into_owned</span>(),
-                    <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
+                    <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
                 );
             }
         }
@@ -2705,7 +2240,7 @@
                     .<span class="ident">as_ref</span>()
                     .<span class="ident">unwrap_or</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">app</span>.<span class="ident">name</span>)
                     .<span class="ident">to_string</span>(),
-                <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
+                <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
             );
         }
         <span class="comment">// If the argument must be a subcommand.</span>
@@ -2724,7 +2259,7 @@
             <span class="self">self</span>.<span class="ident">app</span>,
             <span class="ident">arg_os</span>.<span class="ident">to_str_lossy</span>().<span class="ident">into_owned</span>(),
             <span class="prelude-val">None</span>,
-            <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
+            <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span>[]),
         )
     }
 
@@ -2796,8 +2331,6 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bin_name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">bin_name</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap_or</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">app</span>.<span class="ident">name</span>).<span class="ident">clone</span>();
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sc</span> <span class="op">=</span> {
-            <span class="comment">// @TODO @perf: cloning all these Apps isn&#39;t great, but since it&#39;s just displaying the</span>
-            <span class="comment">// help message there are bigger fish to fry</span>
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sc</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">clone</span>();
 
             <span class="kw">for</span> <span class="ident">cmd</span> <span class="kw">in</span> <span class="ident">cmds</span>.<span class="ident">iter</span>() {
@@ -2818,16 +2351,6 @@
                 }
                 .<span class="ident">clone</span>();
 
-                <span class="kw">if</span> <span class="ident">cmd</span> <span class="op">==</span> <span class="ident">OsStr::new</span>(<span class="string">&quot;help&quot;</span>) {
-                    <span class="kw">let</span> <span class="ident">pb</span> <span class="op">=</span> <span class="ident">Arg::new</span>(<span class="string">&quot;subcommand&quot;</span>)
-                        .<span class="ident">index</span>(<span class="number">1</span>)
-                        .<span class="ident">setting</span>(<span class="ident">ArgSettings::TakesValue</span>)
-                        .<span class="ident">setting</span>(<span class="ident">ArgSettings::MultipleValues</span>)
-                        .<span class="ident">value_name</span>(<span class="string">&quot;SUBCOMMAND&quot;</span>)
-                        .<span class="ident">about</span>(<span class="string">&quot;The subcommand whose help message to display&quot;</span>);
-                    <span class="ident">sc</span> <span class="op">=</span> <span class="ident">sc</span>.<span class="ident">arg</span>(<span class="ident">pb</span>);
-                }
-
                 <span class="ident">sc</span>.<span class="ident">_build</span>();
                 <span class="ident">bin_name</span>.<span class="ident">push</span>(<span class="string">&#39; &#39;</span>);
                 <span class="ident">bin_name</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">sc</span>.<span class="ident">name</span>);
@@ -2837,7 +2360,7 @@
         };
         <span class="ident">sc</span> <span class="op">=</span> <span class="ident">sc</span>.<span class="ident">bin_name</span>(<span class="ident">bin_name</span>);
 
-        <span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">Parser::new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sc</span>);
+        <span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">Parser::new</span>(<span class="kw-2">&amp;mut</span> <span class="ident">sc</span>);
 
         <span class="prelude-val">Err</span>(<span class="ident">parser</span>.<span class="ident">help_err</span>(<span class="self">self</span>.<span class="ident">app</span>.<span class="ident">is_set</span>(<span class="ident">AS::UseLongFormatForHelpSubcommand</span>)))
     }
@@ -2848,7 +2371,7 @@
             <span class="ident">next</span>, <span class="ident">current_positional</span>.<span class="ident">name</span>
         );
 
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllowLeadingHyphen</span>)
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllowHyphenValues</span>)
             <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">app</span>[<span class="kw-2">&amp;</span><span class="ident">current_positional</span>.<span class="ident">id</span>].<span class="ident">is_set</span>(<span class="ident">ArgSettings::AllowHyphenValues</span>)
             <span class="op">|</span><span class="op">|</span> (<span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllowNegativeNumbers</span>) <span class="op">&amp;&amp;</span> <span class="ident">next</span>.<span class="ident">to_str_lossy</span>().<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>().<span class="ident">is_ok</span>())
         {
@@ -2872,10 +2395,10 @@
     }
 
     <span class="kw">fn</span> <span class="ident">parse_subcommand</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
         <span class="ident">sc_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>,
-        <span class="ident">it</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Input</span>,
+        <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>,
+        <span class="ident">it</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Input</span>,
         <span class="ident">keep_state</span>: <span class="ident">bool</span>,
     ) -&gt; <span class="ident">ClapResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="macro">debug!</span>(<span class="string">&quot;Parser::parse_subcommand&quot;</span>);
@@ -2883,7 +2406,8 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">mid_string</span> <span class="op">=</span> <span class="ident">String::from</span>(<span class="string">&quot; &quot;</span>);
 
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::SubcommandsNegateReqs</span>) {
-            <span class="kw">let</span> <span class="ident">reqs</span> <span class="op">=</span> <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">get_required_usage_from</span>(<span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>, <span class="bool-val">true</span>); <span class="comment">// maybe Some(m)</span>
+            <span class="kw">let</span> <span class="ident">reqs</span> <span class="op">=</span>
+                <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">get_required_usage_from</span>(<span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>, <span class="bool-val">true</span>); <span class="comment">// maybe Some(m)</span>
 
             <span class="kw">for</span> <span class="ident">s</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">reqs</span> {
                 <span class="ident">mid_string</span>.<span class="ident">push_str</span>(<span class="ident">s</span>);
@@ -2894,16 +2418,15 @@
         <span class="kw">let</span> <span class="ident">partial_parsing_enabled</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::IgnoreErrors</span>);
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">sc</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">subcommands</span>.<span class="ident">iter_mut</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">name</span> <span class="op">==</span> <span class="ident">sc_name</span>) {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sc_matcher</span> <span class="op">=</span> <span class="ident">ArgMatcher::default</span>();
             <span class="comment">// Display subcommand name, short and long in usage</span>
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sc_names</span> <span class="op">=</span> <span class="ident">sc</span>.<span class="ident">name</span>.<span class="ident">clone</span>();
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">flag_subcmd</span> <span class="op">=</span> <span class="bool-val">false</span>;
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">l</span>) <span class="op">=</span> <span class="ident">sc</span>.<span class="ident">long_flag</span> {
-                <span class="ident">sc_names</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;, --{}&quot;</span>, <span class="ident">l</span>));
+                <span class="macro">write!</span>(<span class="ident">sc_names</span>, <span class="string">&quot;, --{}&quot;</span>, <span class="ident">l</span>).<span class="ident">unwrap</span>();
                 <span class="ident">flag_subcmd</span> <span class="op">=</span> <span class="bool-val">true</span>;
             }
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">s</span>) <span class="op">=</span> <span class="ident">sc</span>.<span class="ident">short_flag</span> {
-                <span class="ident">sc_names</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;, -{}&quot;</span>, <span class="ident">s</span>));
+                <span class="macro">write!</span>(<span class="ident">sc_names</span>, <span class="string">&quot;, -{}&quot;</span>, <span class="ident">s</span>).<span class="ident">unwrap</span>();
                 <span class="ident">flag_subcmd</span> <span class="op">=</span> <span class="bool-val">true</span>;
             }
 
@@ -2931,6 +2454,8 @@
             <span class="comment">// Ensure all args are built and ready to parse</span>
             <span class="ident">sc</span>.<span class="ident">_build</span>();
 
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sc_matcher</span> <span class="op">=</span> <span class="ident">ArgMatcher::new</span>(<span class="ident">sc</span>);
+
             <span class="macro">debug!</span>(<span class="string">&quot;Parser::parse_subcommand: About to parse sc={}&quot;</span>, <span class="ident">sc</span>.<span class="ident">name</span>);
 
             {
@@ -2942,7 +2467,7 @@
                     <span class="ident">p</span>.<span class="ident">flag_subcmd_at</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">flag_subcmd_at</span>;
                     <span class="ident">p</span>.<span class="ident">flag_subcmd_skip</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">flag_subcmd_skip</span>;
                 }
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=</span> <span class="ident">p</span>.<span class="ident">get_matches_with</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sc_matcher</span>, <span class="ident">it</span>) {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=</span> <span class="ident">p</span>.<span class="ident">get_matches_with</span>(<span class="kw-2">&amp;mut</span> <span class="ident">sc_matcher</span>, <span class="ident">it</span>) {
                     <span class="kw">if</span> <span class="ident">partial_parsing_enabled</span> {
                         <span class="macro">debug!</span>(
                             <span class="string">&quot;Parser::parse_subcommand: ignored error in subcommand {}: {:?}&quot;</span>,
@@ -3035,24 +2560,25 @@
         <span class="comment">// specified by the user is sent through. If HiddenShortHelp is not included,</span>
         <span class="comment">// then items specified with hidden_short_help will also be hidden.</span>
         <span class="kw">let</span> <span class="ident">should_long</span> <span class="op">=</span> <span class="op">|</span><span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">|</span> {
-            <span class="ident">v</span>.<span class="ident">long_about</span>.<span class="ident">is_some</span>()
+            <span class="ident">v</span>.<span class="ident">long_help</span>.<span class="ident">is_some</span>()
                 <span class="op">|</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::HiddenLongHelp</span>)
                 <span class="op">|</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::HiddenShortHelp</span>)
         };
 
+        <span class="comment">// Subcommands aren&#39;t checked because we prefer short help for them, deferring to</span>
+        <span class="comment">// `cmd subcmd --help` for more.</span>
         <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">long_about</span>.<span class="ident">is_some</span>()
             <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">before_long_help</span>.<span class="ident">is_some</span>()
             <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">after_long_help</span>.<span class="ident">is_some</span>()
             <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">args</span>.<span class="ident">args</span>().<span class="ident">any</span>(<span class="ident">should_long</span>)
-            <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">subcommands</span>.<span class="ident">iter</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">long_about</span>.<span class="ident">is_some</span>())
     }
 
     <span class="kw">fn</span> <span class="ident">parse_long_arg</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>,
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
+        <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>,
         <span class="ident">long_arg</span>: <span class="kw-2">&amp;</span><span class="ident">RawOsStr</span>,
         <span class="ident">parse_state</span>: <span class="kw-2">&amp;</span><span class="ident">ParseState</span>,
-        <span class="ident">valid_arg_found</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bool</span>,
+        <span class="ident">valid_arg_found</span>: <span class="kw-2">&amp;mut</span> <span class="ident">bool</span>,
         <span class="ident">trailing_values</span>: <span class="ident">bool</span>,
     ) -&gt; <span class="ident">ParseResult</span> {
         <span class="comment">// maybe here lifetime should be &#39;a</span>
@@ -3133,7 +2659,7 @@
             }
         } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">sc_name</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">possible_long_flag_subcommand</span>(<span class="ident">arg</span>) {
             <span class="ident">ParseResult::FlagSubCommand</span>(<span class="ident">sc_name</span>.<span class="ident">to_string</span>())
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllowLeadingHyphen</span>) {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllowHyphenValues</span>) {
             <span class="ident">ParseResult::MaybeHyphenValue</span>
         } <span class="kw">else</span> {
             <span class="ident">ParseResult::NoMatchingArg</span> {
@@ -3143,29 +2669,39 @@
     }
 
     <span class="kw">fn</span> <span class="ident">parse_short_arg</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>,
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
+        <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>,
         <span class="ident">short_arg</span>: <span class="kw-2">&amp;</span><span class="ident">RawOsStr</span>,
         <span class="ident">parse_state</span>: <span class="kw-2">&amp;</span><span class="ident">ParseState</span>,
         <span class="comment">// change this to possible pos_arg when removing the usage of &amp;mut Parser.</span>
         <span class="ident">pos_counter</span>: <span class="ident">usize</span>,
-        <span class="ident">valid_arg_found</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bool</span>,
+        <span class="ident">valid_arg_found</span>: <span class="kw-2">&amp;mut</span> <span class="ident">bool</span>,
         <span class="ident">trailing_values</span>: <span class="ident">bool</span>,
     ) -&gt; <span class="ident">ParseResult</span> {
         <span class="macro">debug!</span>(<span class="string">&quot;Parser::parse_short_arg: short_arg={:?}&quot;</span>, <span class="ident">short_arg</span>);
         <span class="kw">let</span> <span class="ident">arg</span> <span class="op">=</span> <span class="ident">short_arg</span>.<span class="ident">to_str_lossy</span>();
 
-        <span class="kw">if</span> (<span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllowNegativeNumbers</span>) <span class="op">&amp;&amp;</span> <span class="ident">arg</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>().<span class="ident">is_ok</span>())
-            <span class="op">|</span><span class="op">|</span> (<span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllowLeadingHyphen</span>)
-                <span class="op">&amp;&amp;</span> <span class="ident">arg</span>.<span class="ident">chars</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">app</span>.<span class="ident">contains_short</span>(<span class="ident">c</span>)))
-            <span class="op">|</span><span class="op">|</span> <span class="macro">matches!</span>(<span class="ident">parse_state</span>, <span class="ident">ParseState::Opt</span>(<span class="ident">opt</span>) <span class="op">|</span> <span class="ident">ParseState::Pos</span>(<span class="ident">opt</span>)
-                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">app</span>[<span class="ident">opt</span>].<span class="ident">is_set</span>(<span class="ident">ArgSettings::AllowHyphenValues</span>))
-            <span class="op">|</span><span class="op">|</span> <span class="self">self</span>
-                .<span class="ident">app</span>
-                .<span class="ident">args</span>
-                .<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">pos_counter</span>)
-                .<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="ident">arg</span><span class="op">|</span> <span class="ident">arg</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::AllowHyphenValues</span>))
+        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::blocks_in_if_conditions</span>)]</span>
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllowNegativeNumbers</span>) <span class="op">&amp;&amp;</span> <span class="ident">arg</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>().<span class="ident">is_ok</span>() {
+            <span class="macro">debug!</span>(<span class="string">&quot;Parser::parse_short_arg: negative number&quot;</span>);
+            <span class="kw">return</span> <span class="ident">ParseResult::MaybeHyphenValue</span>;
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllowHyphenValues</span>)
+            <span class="op">&amp;&amp;</span> <span class="ident">arg</span>.<span class="ident">chars</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">app</span>.<span class="ident">contains_short</span>(<span class="ident">c</span>))
         {
+            <span class="macro">debug!</span>(<span class="string">&quot;Parser::parse_short_args: contains non-short flag&quot;</span>);
+            <span class="kw">return</span> <span class="ident">ParseResult::MaybeHyphenValue</span>;
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="macro">matches!</span>(<span class="ident">parse_state</span>, <span class="ident">ParseState::Opt</span>(<span class="ident">opt</span>) <span class="op">|</span> <span class="ident">ParseState::Pos</span>(<span class="ident">opt</span>)
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">app</span>[<span class="ident">opt</span>].<span class="ident">is_set</span>(<span class="ident">ArgSettings::AllowHyphenValues</span>))
+        {
+            <span class="macro">debug!</span>(<span class="string">&quot;Parser::parse_short_args: prior arg accepts hyphenated values&quot;</span>,);
+            <span class="kw">return</span> <span class="ident">ParseResult::MaybeHyphenValue</span>;
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">args</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">pos_counter</span>).<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="ident">arg</span><span class="op">|</span> {
+            <span class="ident">arg</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::AllowHyphenValues</span>) <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">arg</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::Last</span>)
+        }) {
+            <span class="macro">debug!</span>(
+                <span class="string">&quot;Parser::parse_short_args: positional at {} allows hyphens&quot;</span>,
+                <span class="ident">pos_counter</span>
+            );
             <span class="kw">return</span> <span class="ident">ParseResult::MaybeHyphenValue</span>;
         }
 
@@ -3255,7 +2791,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">attached_value</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">RawOsStr</span><span class="op">&gt;</span>,
         <span class="ident">opt</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>,
-        <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>,
+        <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>,
         <span class="ident">trailing_values</span>: <span class="ident">bool</span>,
     ) -&gt; <span class="ident">ParseResult</span> {
         <span class="macro">debug!</span>(
@@ -3271,6 +2807,7 @@
         <span class="kw">if</span> <span class="ident">opt</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::RequireEquals</span>) <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">has_eq</span> {
             <span class="kw">if</span> <span class="ident">opt</span>.<span class="ident">min_vals</span> <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="number">0</span>) {
                 <span class="macro">debug!</span>(<span class="string">&quot;Requires equals, but min_vals == 0&quot;</span>);
+                <span class="self">self</span>.<span class="ident">inc_occurrence_of_arg</span>(<span class="ident">matcher</span>, <span class="ident">opt</span>);
                 <span class="comment">// We assume this case is valid: require equals, but min_vals == 0.</span>
                 <span class="kw">if</span> <span class="op">!</span><span class="ident">opt</span>.<span class="ident">default_missing_vals</span>.<span class="ident">is_empty</span>() {
                     <span class="macro">debug!</span>(<span class="string">&quot;Parser::parse_opt: has default_missing_vals&quot;</span>);
@@ -3282,7 +2819,6 @@
                         <span class="bool-val">false</span>,
                     );
                 };
-                <span class="self">self</span>.<span class="ident">inc_occurrence_of_arg</span>(<span class="ident">matcher</span>, <span class="ident">opt</span>);
                 <span class="kw">if</span> <span class="ident">attached_value</span>.<span class="ident">is_some</span>() {
                     <span class="ident">ParseResult::AttachedValueNotConsumed</span>
                 } <span class="kw">else</span> {
@@ -3302,6 +2838,7 @@
                 <span class="ident">fv</span>,
                 <span class="ident">fv</span>.<span class="ident">starts_with</span>(<span class="string">&quot;=&quot;</span>)
             );
+            <span class="self">self</span>.<span class="ident">inc_occurrence_of_arg</span>(<span class="ident">matcher</span>, <span class="ident">opt</span>);
             <span class="self">self</span>.<span class="ident">add_val_to_arg</span>(
                 <span class="ident">opt</span>,
                 <span class="ident">v</span>,
@@ -3310,7 +2847,6 @@
                 <span class="bool-val">false</span>,
                 <span class="ident">trailing_values</span>,
             );
-            <span class="self">self</span>.<span class="ident">inc_occurrence_of_arg</span>(<span class="ident">matcher</span>, <span class="ident">opt</span>);
             <span class="ident">ParseResult::ValuesDone</span>
         } <span class="kw">else</span> {
             <span class="macro">debug!</span>(<span class="string">&quot;Parser::parse_opt: More arg vals required...&quot;</span>);
@@ -3327,7 +2863,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>,
         <span class="ident">val</span>: <span class="kw-2">&amp;</span><span class="ident">RawOsStr</span>,
-        <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>,
+        <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>,
         <span class="ident">ty</span>: <span class="ident">ValueType</span>,
         <span class="ident">append</span>: <span class="ident">bool</span>,
         <span class="ident">trailing_values</span>: <span class="ident">bool</span>,
@@ -3340,26 +2876,12 @@
         );
         <span class="kw">if</span> <span class="op">!</span>(<span class="ident">trailing_values</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::DontDelimitTrailingValues</span>)) {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">delim</span>) <span class="op">=</span> <span class="ident">arg</span>.<span class="ident">val_delim</span> {
-                <span class="kw">let</span> <span class="ident">arg_split</span> <span class="op">=</span> <span class="ident">val</span>.<span class="ident">split</span>(<span class="ident">delim</span>);
-                <span class="kw">let</span> <span class="ident">vals</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">t</span>) <span class="op">=</span> <span class="ident">arg</span>.<span class="ident">terminator</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">vals</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-                    <span class="kw">for</span> <span class="ident">val</span> <span class="kw">in</span> <span class="ident">arg_split</span> {
-                        <span class="kw">if</span> <span class="ident">t</span> <span class="op">==</span> <span class="ident">val</span> {
-                            <span class="kw">break</span>;
-                        }
-                        <span class="ident">vals</span>.<span class="ident">push</span>(<span class="ident">val</span>);
-                    }
-                    <span class="ident">vals</span>
-                } <span class="kw">else</span> {
-                    <span class="ident">arg_split</span>.<span class="ident">collect</span>()
-                };
-                <span class="self">self</span>.<span class="ident">add_multiple_vals_to_arg</span>(
-                    <span class="ident">arg</span>,
-                    <span class="ident">vals</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_os_str</span>().<span class="ident">into_owned</span>()),
-                    <span class="ident">matcher</span>,
-                    <span class="ident">ty</span>,
-                    <span class="ident">append</span>,
-                );
+                <span class="kw">let</span> <span class="ident">terminator</span> <span class="op">=</span> <span class="ident">arg</span>.<span class="ident">terminator</span>.<span class="ident">map</span>(<span class="ident">OsStr::new</span>);
+                <span class="kw">let</span> <span class="ident">vals</span> <span class="op">=</span> <span class="ident">val</span>
+                    .<span class="ident">split</span>(<span class="ident">delim</span>)
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_os_str</span>().<span class="ident">into_owned</span>())
+                    .<span class="ident">take_while</span>(<span class="op">|</span><span class="ident">val</span><span class="op">|</span> <span class="prelude-val">Some</span>(<span class="ident">val</span>.<span class="ident">as_os_str</span>()) <span class="op">!</span><span class="op">=</span> <span class="ident">terminator</span>);
+                <span class="self">self</span>.<span class="ident">add_multiple_vals_to_arg</span>(<span class="ident">arg</span>, <span class="ident">vals</span>, <span class="ident">matcher</span>, <span class="ident">ty</span>, <span class="ident">append</span>);
                 <span class="comment">// If there was a delimiter used or we must use the delimiter to</span>
                 <span class="comment">// separate the values or no more vals is needed, we&#39;re not</span>
                 <span class="comment">// looking for more values.</span>
@@ -3390,7 +2912,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>,
         <span class="ident">vals</span>: <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">OsString</span><span class="op">&gt;</span>,
-        <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>,
+        <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>,
         <span class="ident">ty</span>: <span class="ident">ValueType</span>,
         <span class="ident">append</span>: <span class="ident">bool</span>,
     ) {
@@ -3410,7 +2932,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>,
         <span class="ident">val</span>: <span class="ident">OsString</span>,
-        <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>,
+        <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>,
         <span class="ident">ty</span>: <span class="ident">ValueType</span>,
         <span class="ident">append</span>: <span class="ident">bool</span>,
     ) {
@@ -3432,82 +2954,44 @@
         <span class="ident">matcher</span>.<span class="ident">add_index_to</span>(<span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">id</span>, <span class="self">self</span>.<span class="ident">cur_idx</span>.<span class="ident">get</span>(), <span class="ident">ty</span>);
     }
 
-    <span class="kw">fn</span> <span class="ident">arg_have_val</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>, <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>) -&gt; <span class="ident">bool</span> {
-        <span class="ident">matcher</span>.<span class="ident">arg_have_val</span>(<span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">id</span>)
+    <span class="kw">fn</span> <span class="ident">has_val_groups</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>, <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>) -&gt; <span class="ident">bool</span> {
+        <span class="ident">matcher</span>.<span class="ident">has_val_groups</span>(<span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">id</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">parse_flag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">flag</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>, <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>) -&gt; <span class="ident">ParseResult</span> {
+    <span class="kw">fn</span> <span class="ident">parse_flag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">flag</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>, <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>) -&gt; <span class="ident">ParseResult</span> {
         <span class="macro">debug!</span>(<span class="string">&quot;Parser::parse_flag&quot;</span>);
 
-        <span class="ident">matcher</span>.<span class="ident">add_index_to</span>(<span class="kw-2">&amp;</span><span class="ident">flag</span>.<span class="ident">id</span>, <span class="self">self</span>.<span class="ident">cur_idx</span>.<span class="ident">get</span>(), <span class="ident">ValueType::CommandLine</span>);
         <span class="self">self</span>.<span class="ident">inc_occurrence_of_arg</span>(<span class="ident">matcher</span>, <span class="ident">flag</span>);
+        <span class="ident">matcher</span>.<span class="ident">add_index_to</span>(<span class="kw-2">&amp;</span><span class="ident">flag</span>.<span class="ident">id</span>, <span class="self">self</span>.<span class="ident">cur_idx</span>.<span class="ident">get</span>(), <span class="ident">ValueType::CommandLine</span>);
 
         <span class="ident">ParseResult::ValuesDone</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">remove_overrides</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>) {
-        <span class="macro">debug!</span>(<span class="string">&quot;Parser::remove_overrides&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">to_rem</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Id</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">self_override</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Id</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arg_overrides</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-        <span class="kw">for</span> <span class="ident">name</span> <span class="kw">in</span> <span class="ident">matcher</span>.<span class="ident">arg_names</span>() {
-            <span class="macro">debug!</span>(<span class="string">&quot;Parser::remove_overrides:iter:{:?}&quot;</span>, <span class="ident">name</span>);
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">overrider</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">find</span>(<span class="ident">name</span>) {
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">override_self</span> <span class="op">=</span> <span class="bool-val">false</span>;
-                <span class="kw">for</span> <span class="ident">overridee</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">overrider</span>.<span class="ident">overrides</span> {
-                    <span class="macro">debug!</span>(
-                        <span class="string">&quot;Parser::remove_overrides:iter:{:?} =&gt; {:?}&quot;</span>,
-                        <span class="ident">name</span>, <span class="ident">overrider</span>
-                    );
-                    <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">overridee</span> <span class="op">==</span> <span class="ident">overrider</span>.<span class="ident">id</span> {
-                        <span class="ident">override_self</span> <span class="op">=</span> <span class="bool-val">true</span>;
-                    } <span class="kw">else</span> {
-                        <span class="ident">arg_overrides</span>.<span class="ident">push</span>((<span class="ident">overrider</span>.<span class="ident">id</span>.<span class="ident">clone</span>(), <span class="ident">overridee</span>));
-                        <span class="ident">arg_overrides</span>.<span class="ident">push</span>((<span class="ident">overridee</span>.<span class="ident">clone</span>(), <span class="kw-2">&amp;</span><span class="ident">overrider</span>.<span class="ident">id</span>));
-                    }
-                }
-                <span class="comment">// Only do self override for argument that is not positional</span>
-                <span class="comment">// argument or flag with MultipleOccurrences setting enabled.</span>
-                <span class="kw">if</span> (<span class="self">self</span>.<span class="ident">is_set</span>(<span class="ident">AS::AllArgsOverrideSelf</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">override_self</span>)
-                    <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">overrider</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::MultipleOccurrences</span>)
-                    <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">overrider</span>.<span class="ident">is_positional</span>()
-                {
-                    <span class="macro">debug!</span>(
-                        <span class="string">&quot;Parser::remove_overrides:iter:{:?}:iter:{:?}: self override&quot;</span>,
-                        <span class="ident">name</span>, <span class="ident">overrider</span>
-                    );
-                    <span class="ident">self_override</span>.<span class="ident">push</span>(<span class="ident">overrider</span>.<span class="ident">id</span>.<span class="ident">clone</span>());
+    <span class="kw">fn</span> <span class="ident">remove_overrides</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>, <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>) {
+        <span class="macro">debug!</span>(<span class="string">&quot;Parser::remove_overrides: id={:?}&quot;</span>, <span class="ident">arg</span>.<span class="ident">id</span>);
+        <span class="kw">for</span> <span class="ident">override_id</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">overrides</span> {
+            <span class="macro">debug!</span>(<span class="string">&quot;Parser::remove_overrides:iter:{:?}: removing&quot;</span>, <span class="ident">override_id</span>);
+            <span class="ident">matcher</span>.<span class="ident">remove</span>(<span class="ident">override_id</span>);
+            <span class="self">self</span>.<span class="ident">overridden</span>.<span class="ident">borrow_mut</span>().<span class="ident">push</span>(<span class="ident">override_id</span>.<span class="ident">clone</span>());
+        }
+
+        <span class="comment">// Override anything that can override us</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">transitive</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+        <span class="kw">for</span> <span class="ident">arg_id</span> <span class="kw">in</span> <span class="ident">matcher</span>.<span class="ident">arg_names</span>() {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">overrider</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">find</span>(<span class="ident">arg_id</span>) {
+                <span class="kw">if</span> <span class="ident">overrider</span>.<span class="ident">overrides</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">id</span>) {
+                    <span class="ident">transitive</span>.<span class="ident">push</span>(<span class="kw-2">&amp;</span><span class="ident">overrider</span>.<span class="ident">id</span>);
                 }
             }
         }
-
-        <span class="comment">// remove future overrides in reverse seen order</span>
-        <span class="kw">for</span> <span class="ident">arg</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">seen</span>.<span class="ident">iter</span>().<span class="ident">rev</span>() {
-            <span class="kw">for</span> (<span class="ident">a</span>, <span class="ident">overr</span>) <span class="kw">in</span> <span class="ident">arg_overrides</span>.<span class="ident">iter</span>().<span class="ident">filter</span>(<span class="op">|</span>(<span class="ident">a</span>, <span class="kw">_</span>)<span class="op">|</span> <span class="ident">a</span> <span class="op">==</span> <span class="ident">arg</span>) {
-                <span class="kw">if</span> <span class="op">!</span><span class="ident">to_rem</span>.<span class="ident">contains</span>(<span class="ident">a</span>) {
-                    <span class="ident">to_rem</span>.<span class="ident">push</span>((<span class="kw-2">*</span><span class="ident">overr</span>).<span class="ident">clone</span>());
-                }
-            }
-        }
-
-        <span class="comment">// Do self overrides</span>
-        <span class="kw">for</span> <span class="ident">name</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">self_override</span> {
-            <span class="macro">debug!</span>(<span class="string">&quot;Parser::remove_overrides:iter:self:{:?}: resetting&quot;</span>, <span class="ident">name</span>);
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ma</span>) <span class="op">=</span> <span class="ident">matcher</span>.<span class="ident">get_mut</span>(<span class="ident">name</span>) {
-                <span class="ident">ma</span>.<span class="ident">occurs</span> <span class="op">=</span> <span class="number">1</span>;
-                <span class="ident">ma</span>.<span class="ident">override_vals</span>();
-            }
-        }
-
-        <span class="comment">// Finally remove conflicts</span>
-        <span class="kw">for</span> <span class="ident">name</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">to_rem</span> {
-            <span class="macro">debug!</span>(<span class="string">&quot;Parser::remove_overrides:iter:{:?}: removing&quot;</span>, <span class="ident">name</span>);
-            <span class="ident">matcher</span>.<span class="ident">remove</span>(<span class="ident">name</span>);
-            <span class="self">self</span>.<span class="ident">overridden</span>.<span class="ident">push</span>(<span class="ident">name</span>.<span class="ident">clone</span>());
+        <span class="kw">for</span> <span class="ident">overrider_id</span> <span class="kw">in</span> <span class="ident">transitive</span> {
+            <span class="macro">debug!</span>(<span class="string">&quot;Parser::remove_overrides:iter:{:?}: removing&quot;</span>, <span class="ident">overrider_id</span>);
+            <span class="ident">matcher</span>.<span class="ident">remove</span>(<span class="ident">overrider_id</span>);
+            <span class="self">self</span>.<span class="ident">overridden</span>.<span class="ident">borrow_mut</span>().<span class="ident">push</span>(<span class="ident">overrider_id</span>.<span class="ident">clone</span>());
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">add_defaults</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>, <span class="ident">trailing_values</span>: <span class="ident">bool</span>) {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">add_defaults</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>, <span class="ident">trailing_values</span>: <span class="ident">bool</span>) {
         <span class="macro">debug!</span>(<span class="string">&quot;Parser::add_defaults&quot;</span>);
 
         <span class="kw">for</span> <span class="ident">o</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">get_opts</span>() {
@@ -3524,7 +3008,7 @@
     <span class="kw">fn</span> <span class="ident">add_value</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>,
-        <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>,
+        <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>,
         <span class="ident">ty</span>: <span class="ident">ValueType</span>,
         <span class="ident">trailing_values</span>: <span class="ident">bool</span>,
     ) {
@@ -3607,7 +3091,7 @@
                 <span class="ident">arg</span>.<span class="ident">name</span>
             );
             <span class="kw">match</span> <span class="ident">matcher</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">id</span>) {
-                <span class="prelude-val">Some</span>(<span class="ident">ma</span>) <span class="kw">if</span> <span class="ident">ma</span>.<span class="ident">is_vals_empty</span>() =&gt; {
+                <span class="prelude-val">Some</span>(<span class="ident">ma</span>) <span class="kw">if</span> <span class="ident">ma</span>.<span class="ident">all_val_groups_empty</span>() =&gt; {
                     <span class="macro">debug!</span>(
                         <span class="string">&quot;Parser::add_value:iter:{}: has no user defined vals&quot;</span>,
                         <span class="ident">arg</span>.<span class="ident">name</span>
@@ -3641,8 +3125,8 @@
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;env&quot;</span>)]</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">add_env</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>,
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
+        <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>,
         <span class="ident">trailing_values</span>: <span class="ident">bool</span>,
     ) -&gt; <span class="ident">ClapResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::util::str_to_bool</span>;
@@ -3650,7 +3134,10 @@
         <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">args</span>.<span class="ident">args</span>().<span class="ident">try_for_each</span>(<span class="op">|</span><span class="ident">a</span><span class="op">|</span> {
             <span class="comment">// Use env only if the arg was absent among command line args,</span>
             <span class="comment">// early return if this is not the case.</span>
-            <span class="kw">if</span> <span class="ident">matcher</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">a</span>.<span class="ident">id</span>).<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="ident">a</span><span class="op">|</span> <span class="ident">a</span>.<span class="ident">occurs</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>) {
+            <span class="kw">if</span> <span class="ident">matcher</span>
+                .<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">a</span>.<span class="ident">id</span>)
+                .<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="ident">a</span><span class="op">|</span> <span class="ident">a</span>.<span class="ident">get_occurrences</span>() <span class="op">!</span><span class="op">=</span> <span class="number">0</span>)
+            {
                 <span class="macro">debug!</span>(<span class="string">&quot;Parser::add_env: Skipping existing arg `{}`&quot;</span>, <span class="ident">a</span>);
                 <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
             }
@@ -3700,11 +3187,14 @@
     }
 
     <span class="doccomment">/// Increase occurrence of specific argument and the grouped arg it&#39;s in.</span>
-    <span class="kw">fn</span> <span class="ident">inc_occurrence_of_arg</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>, <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>) {
-        <span class="ident">matcher</span>.<span class="ident">inc_occurrence_of</span>(<span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">id</span>, <span class="ident">arg</span>.<span class="ident">is_set</span>(<span class="ident">ArgSettings::IgnoreCase</span>));
+    <span class="kw">fn</span> <span class="ident">inc_occurrence_of_arg</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>, <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">Arg</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span><span class="op">&gt;</span>) {
+        <span class="comment">// With each new occurrence, remove overrides from prior occurrences</span>
+        <span class="self">self</span>.<span class="ident">remove_overrides</span>(<span class="ident">arg</span>, <span class="ident">matcher</span>);
+
+        <span class="ident">matcher</span>.<span class="ident">inc_occurrence_of_arg</span>(<span class="ident">arg</span>);
         <span class="comment">// Increment or create the group &quot;args&quot;</span>
         <span class="kw">for</span> <span class="ident">group</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">groups_for_arg</span>(<span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">id</span>) {
-            <span class="ident">matcher</span>.<span class="ident">inc_occurrence_of</span>(<span class="kw-2">&amp;</span><span class="ident">group</span>, <span class="bool-val">false</span>);
+            <span class="ident">matcher</span>.<span class="ident">inc_occurrence_of_group</span>(<span class="kw-2">&amp;</span><span class="ident">group</span>);
         }
     }
 }
@@ -3713,9 +3203,9 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span>, <span class="lifetime">&#39;app</span><span class="op">&gt;</span> <span class="ident">Parser</span><span class="op">&lt;</span><span class="lifetime">&#39;help</span>, <span class="lifetime">&#39;app</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Is only used for the long flag(which is the only one needs fuzzy searching)</span>
     <span class="kw">fn</span> <span class="ident">did_you_mean_error</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
         <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">matcher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ArgMatcher</span>,
+        <span class="ident">matcher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">ArgMatcher</span>,
         <span class="ident">remaining_args</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>],
     ) -&gt; <span class="ident">ClapError</span> {
         <span class="macro">debug!</span>(<span class="string">&quot;Parser::did_you_mean_error: arg={}&quot;</span>, <span class="ident">arg</span>);
@@ -3759,13 +3249,14 @@
             <span class="self">self</span>.<span class="ident">app</span>,
             <span class="macro">format!</span>(<span class="string">&quot;--{}&quot;</span>, <span class="ident">arg</span>),
             <span class="ident">did_you_mean</span>,
-            <span class="ident">Usage::new</span>(<span class="self">self</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">used</span>),
+            <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>).<span class="ident">create_usage_with_title</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">used</span>),
         )
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">write_help_err</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">ClapResult</span><span class="op">&lt;</span><span class="ident">Colorizer</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Colorizer::new</span>(<span class="bool-val">true</span>, <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">get_color</span>());
-        <span class="ident">Help::new</span>(<span class="ident">HelpWriter::Buffer</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">c</span>), <span class="self">self</span>, <span class="bool-val">false</span>).<span class="ident">write_help</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">usage</span> <span class="op">=</span> <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Colorizer::new</span>(<span class="bool-val">true</span>, <span class="self">self</span>.<span class="ident">color_help</span>());
+        <span class="ident">Help::new</span>(<span class="ident">HelpWriter::Buffer</span>(<span class="kw-2">&amp;mut</span> <span class="ident">c</span>), <span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="ident">usage</span>, <span class="bool-val">false</span>).<span class="ident">write_help</span>()<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">c</span>)
     }
 
@@ -3776,11 +3267,12 @@
         );
 
         <span class="ident">use_long</span> <span class="op">=</span> <span class="ident">use_long</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">use_long_help</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Colorizer::new</span>(<span class="bool-val">false</span>, <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">get_color</span>());
+        <span class="kw">let</span> <span class="ident">usage</span> <span class="op">=</span> <span class="ident">Usage::new</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">required</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Colorizer::new</span>(<span class="bool-val">false</span>, <span class="self">self</span>.<span class="ident">color_help</span>());
 
-        <span class="kw">match</span> <span class="ident">Help::new</span>(<span class="ident">HelpWriter::Buffer</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">c</span>), <span class="self">self</span>, <span class="ident">use_long</span>).<span class="ident">write_help</span>() {
+        <span class="kw">match</span> <span class="ident">Help::new</span>(<span class="ident">HelpWriter::Buffer</span>(<span class="kw-2">&amp;mut</span> <span class="ident">c</span>), <span class="self">self</span>.<span class="ident">app</span>, <span class="kw-2">&amp;</span><span class="ident">usage</span>, <span class="ident">use_long</span>).<span class="ident">write_help</span>() {
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="ident">e</span>.<span class="ident">into</span>(),
-            <span class="kw">_</span> =&gt; <span class="ident">ClapError::new</span>(<span class="ident">c</span>, <span class="ident">ErrorKind::DisplayHelp</span>),
+            <span class="kw">_</span> =&gt; <span class="ident">ClapError::for_app</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="ident">c</span>, <span class="ident">ErrorKind::DisplayHelp</span>, <span class="macro">vec!</span>[]),
         }
     }
 
@@ -3788,9 +3280,9 @@
         <span class="macro">debug!</span>(<span class="string">&quot;Parser::version_err&quot;</span>);
 
         <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">_render_version</span>(<span class="ident">use_long</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Colorizer::new</span>(<span class="bool-val">false</span>, <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">get_color</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Colorizer::new</span>(<span class="bool-val">false</span>, <span class="self">self</span>.<span class="ident">color_help</span>());
         <span class="ident">c</span>.<span class="ident">none</span>(<span class="ident">msg</span>);
-        <span class="ident">ClapError::new</span>(<span class="ident">c</span>, <span class="ident">ErrorKind::DisplayVersion</span>)
+        <span class="ident">ClapError::for_app</span>(<span class="self">self</span>.<span class="ident">app</span>, <span class="ident">c</span>, <span class="ident">ErrorKind::DisplayVersion</span>, <span class="macro">vec!</span>[])
     }
 }
 
@@ -3800,7 +3292,89 @@
         <span class="self">self</span>.<span class="ident">app</span>.<span class="ident">is_set</span>(<span class="ident">s</span>)
     }
 }
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">Input</span> {
+    <span class="ident">items</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OsString</span><span class="op">&gt;</span>,
+    <span class="ident">cursor</span>: <span class="ident">usize</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">I</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Input</span>
+<span class="kw">where</span>
+    <span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">OsString</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clone</span>,
+{
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">Self</span> {
+            <span class="ident">items</span>: <span class="ident">val</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">into</span>()).<span class="ident">collect</span>(),
+            <span class="ident">cursor</span>: <span class="number">0</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Input</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="ident">OsStr</span>, <span class="kw-2">&amp;</span>[<span class="ident">OsString</span>])<span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">items</span>.<span class="ident">len</span>() {
+            <span class="prelude-val">None</span>
+        } <span class="kw">else</span> {
+            <span class="kw">let</span> <span class="ident">current</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">items</span>[<span class="self">self</span>.<span class="ident">cursor</span>];
+            <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="kw">let</span> <span class="ident">remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">items</span>[<span class="self">self</span>.<span class="ident">cursor</span>..];
+            <span class="prelude-val">Some</span>((<span class="ident">current</span>, <span class="ident">remaining</span>))
+        }
+    }
+
+    <span class="doccomment">/// Insert some items to the Input items just after current parsing cursor.</span>
+    <span class="doccomment">/// Usually used by replaced items recovering.</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">insert</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">insert_items</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) {
+        <span class="self">self</span>.<span class="ident">items</span> <span class="op">=</span> <span class="ident">insert_items</span>
+            .<span class="ident">iter</span>()
+            .<span class="ident">map</span>(<span class="ident">OsString::from</span>)
+            .<span class="ident">chain</span>(<span class="self">self</span>.<span class="ident">items</span>.<span class="ident">drain</span>(<span class="self">self</span>.<span class="ident">cursor</span>..))
+            .<span class="ident">collect</span>();
+        <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">=</span> <span class="number">0</span>;
+    }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum</span> <span class="ident">ParseState</span> {
+    <span class="ident">ValuesDone</span>,
+    <span class="ident">Opt</span>(<span class="ident">Id</span>),
+    <span class="ident">Pos</span>(<span class="ident">Id</span>),
+}
+
+<span class="doccomment">/// Recoverable Parsing results.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">enum</span> <span class="ident">ParseResult</span> {
+    <span class="ident">FlagSubCommand</span>(<span class="ident">String</span>),
+    <span class="ident">Opt</span>(<span class="ident">Id</span>),
+    <span class="ident">ValuesDone</span>,
+    <span class="doccomment">/// Value attached to the short flag is not consumed(e.g. &#39;u&#39; for `-cu` is</span>
+    <span class="doccomment">/// not consumed).</span>
+    <span class="ident">AttachedValueNotConsumed</span>,
+    <span class="doccomment">/// This long flag doesn&#39;t need a value but is provided one.</span>
+    <span class="ident">UnneededAttachedValue</span> {
+        <span class="ident">rest</span>: <span class="ident">String</span>,
+        <span class="ident">used</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Id</span><span class="op">&gt;</span>,
+        <span class="ident">arg</span>: <span class="ident">String</span>,
+    },
+    <span class="doccomment">/// This flag might be an hyphen Value.</span>
+    <span class="ident">MaybeHyphenValue</span>,
+    <span class="doccomment">/// Equals required but not provided.</span>
+    <span class="ident">EqualsNotProvided</span> {
+        <span class="ident">arg</span>: <span class="ident">String</span>,
+    },
+    <span class="doccomment">/// Failed to match a Arg.</span>
+    <span class="ident">NoMatchingArg</span> {
+        <span class="ident">arg</span>: <span class="ident">String</span>,
+    },
+    <span class="doccomment">/// No argument found e.g. parser is given `-` when parsing a flag.</span>
+    <span class="ident">NoArg</span>,
+    <span class="doccomment">/// This is a Help flag.</span>
+    <span class="ident">HelpFlag</span>,
+    <span class="doccomment">/// This is a version flag.</span>
+    <span class="ident">VersionFlag</span>,
+}
 </code></pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="clap" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
-    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="clap" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (71226d717 2022-02-04)" ></div>
 </body></html>
