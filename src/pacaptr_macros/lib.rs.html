@@ -3,15 +3,15 @@
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../pacaptr_macros/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../pacaptr_macros/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1"> 1</span>
-<span id="2"> 2</span>
-<span id="3"> 3</span>
-<span id="4"> 4</span>
-<span id="5"> 5</span>
-<span id="6"> 6</span>
-<span id="7"> 7</span>
-<span id="8"> 8</span>
-<span id="9"> 9</span>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../pacaptr_macros/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
 <span id="10">10</span>
 <span id="11">11</span>
 <span id="12">12</span>
@@ -76,6 +76,14 @@
 <span id="71">71</span>
 <span id="72">72</span>
 <span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
 </pre><pre class="rust"><code><span class="kw">mod</span> <span class="ident">compat_table</span>;
 <span class="kw">mod</span> <span class="ident">test_dsl</span>;
 
@@ -99,6 +107,8 @@
 <span class="doccomment">/// - `ou` item: Check the output of the **last** `in` or `in !` item above</span>
 <span class="doccomment">///   against a **regex** pattern.</span>
 <span class="doccomment">///</span>
+<span class="doccomment">/// A comment in this DSL starts with a `#`.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```no_run</span>
@@ -106,13 +116,19 @@
 <span class="doccomment">/// #[ignore]</span>
 <span class="doccomment">/// fn apt_r_s() {</span>
 <span class="doccomment">///    test_dsl! { r##&quot;</span>
-<span class="doccomment">///        in -Sy               # Refresh with `pacaptr -Sy`.</span>
-<span class="doccomment">///        in -S screen --yes   # Install `screen`.</span>
-<span class="doccomment">///        in ! which screen    # Verify installation.</span>
+<span class="doccomment">///        # Refresh with `pacaptr -Sy`.</span>
+<span class="doccomment">///        in -Sy</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///        # Install `screen`.</span>
+<span class="doccomment">///        in -S screen --yes</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///        # Verify installation.</span>
+<span class="doccomment">///        in ! which screen    </span>
 <span class="doccomment">///        ou ^/usr/bin/screen</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///        in -R screen --yes   # Remove `screen`.</span>
-<span class="doccomment">///        in -Qi screen        # Verify removal.</span>
+<span class="doccomment">///        # Remove `screen` and verify removal.</span>
+<span class="doccomment">///        in -R screen --yes  </span>
+<span class="doccomment">///        in -Qi screen</span>
 <span class="doccomment">///        ou ^Status: deinstall</span>
 <span class="doccomment">///    &quot;## }</span>
 <span class="doccomment">/// }</span>
@@ -150,5 +166,5 @@
         .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">to_compile_error</span>().<span class="ident">into</span>())
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pacaptr_macros" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0-nightly (03a8cc7df 2022-02-21)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pacaptr_macros" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (ea92b0838 2022-05-07)" ></div>
 </body></html>

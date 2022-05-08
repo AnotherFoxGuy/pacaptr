@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["AlignmentStrategy","AlignmentStrategy is a responsible for a flow how we apply an aligment. It mostly matters for multiline strings."],["TrimStrategy","TrimStrategy determins if it’s alowed to use empty space while doing [crate::Alignment]."]],"struct":[["TabSize","Set a tab size."]]});
