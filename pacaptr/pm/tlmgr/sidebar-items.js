@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["docs_self",""]],"static":[["STRAT_CHECK_DRY",""]],"struct":[["Tlmgr","The TexLive Package Manager."]]});
+window.SIDEBAR_ITEMS = {"macro":[["docs_self",""]],"static":[["STRAT_CHECK_DRY",""]],"struct":[["Tlmgr","The TexLive Package Manager."]]};

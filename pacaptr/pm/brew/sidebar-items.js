@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["docs_self",""]],"static":[["STRAT_INSTALL",""],["STRAT_PROMPT",""]],"struct":[["Brew","The Homebrew Package Manager."]]});
+window.SIDEBAR_ITEMS = {"macro":[["docs_self",""]],"static":[["STRAT_INSTALL",""],["STRAT_PROMPT",""]],"struct":[["Brew","The Homebrew Package Manager."]]};

@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["docs_self",""]],"static":[["STRAT_CHECK_DRY",""],["STRAT_PROMPT",""]],"struct":[["Choco","The Chocolatey Package Manager."]]});
+window.SIDEBAR_ITEMS = {"macro":[["docs_self",""]],"static":[["STRAT_CHECK_DRY",""],["STRAT_PROMPT",""]],"struct":[["Choco","The Chocolatey Package Manager."]]};

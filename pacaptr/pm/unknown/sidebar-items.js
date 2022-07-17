@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["docs_self",""]],"struct":[["Unknown","An empty mapping for unidentified package managers."]]});
+window.SIDEBAR_ITEMS = {"macro":[["docs_self",""]],"struct":[["Unknown","An empty mapping for unidentified package managers."]]};

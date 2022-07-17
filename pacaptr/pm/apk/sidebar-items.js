@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["docs_self",""]],"static":[["STRAT_INSTALL",""],["STRAT_PROMPT",""]],"struct":[["Apk","The Alpine Linux package management system."]]});
+window.SIDEBAR_ITEMS = {"macro":[["docs_self",""]],"static":[["STRAT_INSTALL",""],["STRAT_PROMPT",""]],"struct":[["Apk","The Alpine Linux package management system."]]};

@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["docs_self",""]],"static":[["STRAT_INSTALL",""],["STRAT_PROMPT",""],["STRAT_PROMPT_CUSTOM",""]],"struct":[["Dnf","The Dandified YUM."]]});
+window.SIDEBAR_ITEMS = {"macro":[["docs_self",""]],"static":[["STRAT_INSTALL",""],["STRAT_PROMPT",""],["STRAT_PROMPT_CUSTOM",""]],"struct":[["Dnf","The Dandified YUM."]]};

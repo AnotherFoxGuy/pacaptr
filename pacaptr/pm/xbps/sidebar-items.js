@@ -1,1 +1,1 @@
-initSidebarItems({"constant":[["PKG_NOT_FOUND_CODE",""]],"macro":[["docs_self",""]],"static":[["STRAT_PROMPT",""]],"struct":[["Xbps","The X Binary Package System."]]});
+window.SIDEBAR_ITEMS = {"constant":[["PKG_NOT_FOUND_CODE",""]],"macro":[["docs_self",""]],"static":[["STRAT_PROMPT",""]],"struct":[["Xbps","The X Binary Package System."]]};

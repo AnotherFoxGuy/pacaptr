@@ -1,9 +1,12 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/tabled-0.6.1/src/highlight.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>highlight.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../tabled/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/tabled-0.7.0/src/highlight.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>highlight.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../tabled/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/zhiburt/tabled/86ac146e532ce9f7626608d7fd05072123603a2e/assets/tabled-gear.svg" alt="logo"></div>
         </a><h2 class="location"></h2>
     </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../tabled/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../tabled/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../tabled/index.html"><div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/zhiburt/tabled/86ac146e532ce9f7626608d7fd05072123603a2e/assets/tabled-gear.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../tabled/index.html">
+                        <img src="https://raw.githubusercontent.com/zhiburt/tabled/86ac146e532ce9f7626608d7fd05072123603a2e/assets/tabled-gear.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1">
+                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -397,7 +400,13 @@
 <span id="392">392</span>
 <span id="393">393</span>
 <span id="394">394</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::collections::HashSet</span>;
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+</pre><pre class="rust"><code><span class="doccomment">//! This module contains a [Highlight] primitive, which helps</span>
+<span class="doccomment">//! changing a [Border] style of any segment on a [Table].</span>
+
+<span class="kw">use</span> <span class="ident">std::collections::HashSet</span>;
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused</span>)]</span>
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Table</span>;
@@ -415,7 +424,7 @@
 <span class="doccomment">/// # Example</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// use tabled::{TableIteratorExt, Highlight, style::{Border, Style}, object::Full};</span>
+<span class="doccomment">/// use tabled::{TableIteratorExt, Highlight, style::{Border, Style}, object::Segment};</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let data = [</span>
 <span class="doccomment">///     (&quot;ELF&quot;, &quot;Extensible Linking Format&quot;, true),</span>
@@ -427,7 +436,7 @@
 <span class="doccomment">///                .enumerate()</span>
 <span class="doccomment">///                .table()</span>
 <span class="doccomment">///                .with(Style::github_markdown())</span>
-<span class="doccomment">///                .with(Highlight::new(Full, Border::default().top(&#39;^&#39;).bottom(&#39;v&#39;)))</span>
+<span class="doccomment">///                .with(Highlight::new(Segment::all(), Border::default().top(&#39;^&#39;).bottom(&#39;v&#39;)))</span>
 <span class="doccomment">///                .to_string();</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(</span>
@@ -448,7 +457,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// use tabled::{TableIteratorExt, Highlight, style::{Border, Style}, object::{Full, Cell, Object}};</span>
+<span class="doccomment">/// use tabled::{TableIteratorExt, Highlight, style::{Border, Style}, object::{Segment, Cell, Object}};</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let data = [</span>
 <span class="doccomment">///     (&quot;ELF&quot;, &quot;Extensible Linking Format&quot;, true),</span>
@@ -460,7 +469,7 @@
 <span class="doccomment">///                .enumerate()</span>
 <span class="doccomment">///                .table()</span>
 <span class="doccomment">///                .with(Style::github_markdown())</span>
-<span class="doccomment">///                .with(Highlight::new(Full.not(Cell(0,0).and(Cell(1, 0).and(Cell(0, 1)).and(Cell(0, 3)))), Border::filled(&#39;*&#39;)))</span>
+<span class="doccomment">///                .with(Highlight::new(Segment::all().not(Cell(0,0).and(Cell(1, 0).and(Cell(0, 1)).and(Cell(0, 3)))), Border::filled(&#39;*&#39;)))</span>
 <span class="doccomment">///                .to_string();</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(</span>
@@ -599,143 +608,143 @@
     }
 
     <span class="kw">for</span> <span class="kw-2">&amp;</span>(<span class="ident">row</span>, <span class="ident">col</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">sector</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">Border::default</span>();
+        <span class="kw">let</span> <span class="ident">border</span> <span class="op">=</span> <span class="ident">build_cell_border</span>(<span class="kw-2">&amp;</span><span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>, <span class="kw-2">&amp;</span><span class="ident">border</span>);
 
-        <span class="kw">let</span> <span class="ident">cell_has_top_neighbor</span> <span class="op">=</span> <span class="ident">cell_has_top_neighbor</span>(<span class="kw-2">&amp;</span><span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
-        <span class="kw">let</span> <span class="ident">cell_has_bottom_neighbor</span> <span class="op">=</span> <span class="ident">cell_has_bottom_neighbor</span>(<span class="kw-2">&amp;</span><span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
-        <span class="kw">let</span> <span class="ident">cell_has_left_neighbor</span> <span class="op">=</span> <span class="ident">cell_has_left_neighbor</span>(<span class="kw-2">&amp;</span><span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
-        <span class="kw">let</span> <span class="ident">cell_has_right_neighbor</span> <span class="op">=</span> <span class="ident">cell_has_right_neighbor</span>(<span class="kw-2">&amp;</span><span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
+        <span class="ident">grid</span>.<span class="ident">set</span>(
+            <span class="ident">Entity::Cell</span>(<span class="ident">row</span>, <span class="ident">col</span>),
+            <span class="ident">Settings::default</span>().<span class="ident">border</span>(<span class="ident">border</span>).<span class="ident">border_restriction</span>(<span class="bool-val">false</span>),
+        );
+    }
+}
 
-        <span class="kw">let</span> <span class="ident">this_has_left_top_neighbor</span> <span class="op">=</span> <span class="ident">is_there_left_top_cell</span>(<span class="kw-2">&amp;</span><span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
-        <span class="kw">let</span> <span class="ident">this_has_right_top_neighbor</span> <span class="op">=</span> <span class="ident">is_there_right_top_cell</span>(<span class="kw-2">&amp;</span><span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
-        <span class="kw">let</span> <span class="ident">this_has_left_bottom_neighbor</span> <span class="op">=</span> <span class="ident">is_there_left_bottom_cell</span>(<span class="kw-2">&amp;</span><span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
-        <span class="kw">let</span> <span class="ident">this_has_right_bottom_neighbor</span> <span class="op">=</span> <span class="ident">is_there_right_bottom_cell</span>(<span class="kw-2">&amp;</span><span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
+<span class="kw">fn</span> <span class="ident">build_cell_border</span>(
+    <span class="ident">sector</span>: <span class="kw-2">&amp;</span><span class="ident">HashSet</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span>,
+    <span class="ident">row</span>: <span class="ident">usize</span>,
+    <span class="ident">col</span>: <span class="ident">usize</span>,
+    <span class="ident">border</span>: <span class="kw-2">&amp;</span><span class="ident">Border</span>,
+) -&gt; <span class="ident">Border</span> {
+    <span class="kw">let</span> <span class="ident">cell_has_top_neighbor</span> <span class="op">=</span> <span class="ident">cell_has_top_neighbor</span>(<span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
+    <span class="kw">let</span> <span class="ident">cell_has_bottom_neighbor</span> <span class="op">=</span> <span class="ident">cell_has_bottom_neighbor</span>(<span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
+    <span class="kw">let</span> <span class="ident">cell_has_left_neighbor</span> <span class="op">=</span> <span class="ident">cell_has_left_neighbor</span>(<span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
+    <span class="kw">let</span> <span class="ident">cell_has_right_neighbor</span> <span class="op">=</span> <span class="ident">cell_has_right_neighbor</span>(<span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">top</span> {
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_top_neighbor</span> {
-                <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top</span>(<span class="ident">c</span>);
+    <span class="kw">let</span> <span class="ident">this_has_left_top_neighbor</span> <span class="op">=</span> <span class="ident">is_there_left_top_cell</span>(<span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
+    <span class="kw">let</span> <span class="ident">this_has_right_top_neighbor</span> <span class="op">=</span> <span class="ident">is_there_right_top_cell</span>(<span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
+    <span class="kw">let</span> <span class="ident">this_has_left_bottom_neighbor</span> <span class="op">=</span> <span class="ident">is_there_left_bottom_cell</span>(<span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
+    <span class="kw">let</span> <span class="ident">this_has_right_bottom_neighbor</span> <span class="op">=</span> <span class="ident">is_there_right_bottom_cell</span>(<span class="ident">sector</span>, <span class="ident">row</span>, <span class="ident">col</span>);
 
-                <span class="kw">if</span> <span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">this_has_right_top_neighbor</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">Border::default</span>();
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">top</span>.<span class="ident">clone</span>() {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_top_neighbor</span> {
+            <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top</span>(<span class="ident">c</span>.<span class="ident">clone</span>());
+
+            <span class="kw">if</span> <span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">this_has_right_top_neighbor</span> {
+                <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_right_corner</span>(<span class="ident">c</span>);
+            }
+        }
+    }
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">bottom</span>.<span class="ident">clone</span>() {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_bottom_neighbor</span> {
+            <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom</span>(<span class="ident">c</span>.<span class="ident">clone</span>());
+
+            <span class="kw">if</span> <span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">this_has_right_bottom_neighbor</span> {
+                <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_right_corner</span>(<span class="ident">c</span>);
+            }
+        }
+    }
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left</span>.<span class="ident">clone</span>() {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_left_neighbor</span> {
+            <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">left</span>(<span class="ident">c</span>.<span class="ident">clone</span>());
+
+            <span class="kw">if</span> <span class="ident">cell_has_bottom_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">this_has_left_bottom_neighbor</span> {
+                <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_left_corner</span>(<span class="ident">c</span>);
+            }
+        }
+    }
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right</span>.<span class="ident">clone</span>() {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_right_neighbor</span> {
+            <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">right</span>(<span class="ident">c</span>.<span class="ident">clone</span>());
+
+            <span class="kw">if</span> <span class="ident">cell_has_bottom_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">this_has_right_bottom_neighbor</span> {
+                <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_right_corner</span>(<span class="ident">c</span>);
+            }
+        }
+    }
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left_top_corner</span>.<span class="ident">clone</span>() {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_left_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">cell_has_top_neighbor</span> {
+            <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_left_corner</span>(<span class="ident">c</span>);
+        }
+    }
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left_bottom_corner</span>.<span class="ident">clone</span>() {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_left_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">cell_has_bottom_neighbor</span> {
+            <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_left_corner</span>(<span class="ident">c</span>);
+        }
+    }
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right_top_corner</span>.<span class="ident">clone</span>() {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">cell_has_top_neighbor</span> {
+            <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_right_corner</span>(<span class="ident">c</span>);
+        }
+    }
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right_bottom_corner</span>.<span class="ident">clone</span>() {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">cell_has_bottom_neighbor</span> {
+            <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_right_corner</span>(<span class="ident">c</span>);
+        }
+    }
+    {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_bottom_neighbor</span> {
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_left_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_left_top_neighbor</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right_top_corner</span>.<span class="ident">clone</span>() {
+                    <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_left_corner</span>(<span class="ident">c</span>);
+                }
+            }
+
+            <span class="kw">if</span> <span class="ident">cell_has_left_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_left_bottom_neighbor</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left_top_corner</span>.<span class="ident">clone</span>() {
+                    <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_left_corner</span>(<span class="ident">c</span>);
+                }
+            }
+
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_right_top_neighbor</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left_top_corner</span>.<span class="ident">clone</span>() {
+                    <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_right_corner</span>(<span class="ident">c</span>);
+                }
+            }
+
+            <span class="kw">if</span> <span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_right_bottom_neighbor</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right_top_corner</span>.<span class="ident">clone</span>() {
+                    <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_right_corner</span>(<span class="ident">c</span>);
+                }
+            }
+        }
+
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_top_neighbor</span> {
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_left_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_left_bottom_neighbor</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right_bottom_corner</span>.<span class="ident">clone</span>() {
+                    <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_left_corner</span>(<span class="ident">c</span>);
+                }
+            }
+
+            <span class="kw">if</span> <span class="ident">cell_has_left_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_left_top_neighbor</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left_bottom_corner</span>.<span class="ident">clone</span>() {
+                    <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_left_corner</span>(<span class="ident">c</span>);
+                }
+            }
+
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_right_bottom_neighbor</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left_bottom_corner</span>.<span class="ident">clone</span>() {
+                    <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_right_corner</span>(<span class="ident">c</span>);
+                }
+            }
+
+            <span class="kw">if</span> <span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_right_top_neighbor</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right_bottom_corner</span>.<span class="ident">clone</span>() {
                     <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_right_corner</span>(<span class="ident">c</span>);
                 }
             }
         }
-
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">bottom</span> {
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_bottom_neighbor</span> {
-                <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom</span>(<span class="ident">c</span>);
-
-                <span class="kw">if</span> <span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">this_has_right_bottom_neighbor</span> {
-                    <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_right_corner</span>(<span class="ident">c</span>);
-                }
-            }
-        }
-
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left</span> {
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_left_neighbor</span> {
-                <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">left</span>(<span class="ident">c</span>);
-
-                <span class="kw">if</span> <span class="ident">cell_has_bottom_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">this_has_left_bottom_neighbor</span> {
-                    <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_left_corner</span>(<span class="ident">c</span>);
-                }
-            }
-        }
-
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right</span> {
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_right_neighbor</span> {
-                <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">right</span>(<span class="ident">c</span>);
-
-                <span class="kw">if</span> <span class="ident">cell_has_bottom_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">this_has_right_bottom_neighbor</span> {
-                    <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_right_corner</span>(<span class="ident">c</span>);
-                }
-            }
-        }
-
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left_top_corner</span> {
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_left_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">cell_has_top_neighbor</span> {
-                <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_left_corner</span>(<span class="ident">c</span>);
-            }
-        }
-
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left_bottom_corner</span> {
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_left_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">cell_has_bottom_neighbor</span> {
-                <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_left_corner</span>(<span class="ident">c</span>);
-            }
-        }
-
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right_top_corner</span> {
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">cell_has_top_neighbor</span> {
-                <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_right_corner</span>(<span class="ident">c</span>);
-            }
-        }
-
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right_bottom_corner</span> {
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">cell_has_bottom_neighbor</span> {
-                <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_right_corner</span>(<span class="ident">c</span>);
-            }
-        }
-
-        {
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_bottom_neighbor</span> {
-                <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_left_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_left_top_neighbor</span> {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right_top_corner</span> {
-                        <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_left_corner</span>(<span class="ident">c</span>);
-                    }
-                }
-
-                <span class="kw">if</span> <span class="ident">cell_has_left_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_left_bottom_neighbor</span> {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left_top_corner</span> {
-                        <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_left_corner</span>(<span class="ident">c</span>);
-                    }
-                }
-
-                <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_right_top_neighbor</span> {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left_top_corner</span> {
-                        <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_right_corner</span>(<span class="ident">c</span>);
-                    }
-                }
-
-                <span class="kw">if</span> <span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_right_bottom_neighbor</span> {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right_top_corner</span> {
-                        <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_right_corner</span>(<span class="ident">c</span>);
-                    }
-                }
-            }
-
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_top_neighbor</span> {
-                <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_left_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_left_bottom_neighbor</span> {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right_bottom_corner</span> {
-                        <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_left_corner</span>(<span class="ident">c</span>);
-                    }
-                }
-
-                <span class="kw">if</span> <span class="ident">cell_has_left_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_left_top_neighbor</span> {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left_bottom_corner</span> {
-                        <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_left_corner</span>(<span class="ident">c</span>);
-                    }
-                }
-
-                <span class="kw">if</span> <span class="op">!</span><span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_right_bottom_neighbor</span> {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">left_bottom_corner</span> {
-                        <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">bottom_right_corner</span>(<span class="ident">c</span>);
-                    }
-                }
-
-                <span class="kw">if</span> <span class="ident">cell_has_right_neighbor</span> <span class="op">&amp;&amp;</span> <span class="ident">this_has_right_top_neighbor</span> {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="ident">border</span>.<span class="ident">right_bottom_corner</span> {
-                        <span class="ident">cell_border</span> <span class="op">=</span> <span class="ident">cell_border</span>.<span class="ident">top_right_corner</span>(<span class="ident">c</span>);
-                    }
-                }
-            }
-        }
-
-        <span class="ident">grid</span>.<span class="ident">set</span>(
-            <span class="kw-2">&amp;</span><span class="ident">Entity::Cell</span>(<span class="ident">row</span>, <span class="ident">col</span>),
-            <span class="ident">Settings::default</span>()
-                .<span class="ident">border</span>(<span class="ident">cell_border</span>)
-                .<span class="ident">border_restriction</span>(<span class="bool-val">false</span>),
-        );
     }
+
+    <span class="ident">cell_border</span>
 }
 
 <span class="kw">fn</span> <span class="ident">cell_has_top_neighbor</span>(<span class="ident">sector</span>: <span class="kw-2">&amp;</span><span class="ident">HashSet</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span>, <span class="ident">row</span>: <span class="ident">usize</span>, <span class="ident">col</span>: <span class="ident">usize</span>) -&gt; <span class="ident">bool</span> {
@@ -792,5 +801,5 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="tabled" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (ea92b0838 2022-05-07)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="tabled" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (d5e7f4782 2022-07-16)" ></div>
 </body></html>

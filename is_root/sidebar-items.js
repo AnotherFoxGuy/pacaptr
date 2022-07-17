@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["is_root","Returns `true` if user is root; `false` otherwise"]]});
+window.SIDEBAR_ITEMS = {"fn":[["is_root","Returns `true` if user is root; `false` otherwise"]]};

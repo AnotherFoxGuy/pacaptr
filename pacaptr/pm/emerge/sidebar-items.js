@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["docs_self",""]],"static":[["STRAT_ASK",""],["STRAT_INSTALL",""],["STRAT_INTERACTIVE",""]],"struct":[["Emerge","The Portage Package Manager."]]});
+window.SIDEBAR_ITEMS = {"macro":[["docs_self",""]],"static":[["STRAT_ASK",""],["STRAT_INSTALL",""],["STRAT_INTERACTIVE",""]],"struct":[["Emerge","The Portage Package Manager."]]};
