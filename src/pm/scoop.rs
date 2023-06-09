@@ -170,6 +170,12 @@ impl Pm for Scoop {
             .kws(if kws.is_empty() { &["*"][..] } else { kws })
             .flags(flags)
             .pipe(|cmd| self.run_with(cmd, self.default_mode(), &STRAT_INSTALL))
+            .await?;
+
+        Cmd::new(&[&self.shell, "-Command", "scoop", "cleanup"])
+            .kws(if kws.is_empty() { &["*"][..] } else { kws })
+            .flags(flags)
+            .pipe(|cmd| self.run_with(cmd, PmMode::default(), &STRAT_INSTALL))
             .await
     }
 
